@@ -8,7 +8,7 @@ var basename  = path.basename(__filename);
 var env       = process.env.NODE_ENV || 'development';
 var db        = {};
 
-var sequelize = new Sequelize(db.dbName, db.dbUser, db.dbPassword, {
+var sequelize = new Sequelize(dbConfig.dbName, dbConfig.dbUser, dbConfig.dbPassword, {
     host: "127.0.0.1",
     dialect: 'postgres'
     }
