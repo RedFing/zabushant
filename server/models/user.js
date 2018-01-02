@@ -5,5 +5,10 @@ module.exports = (sequelize, DataTypes) => {
         password: { type: DataTypes.STRING, allowNull: false }
     });
 
+    User.associate = function(models) {
+        models.User.belongsToMany(models.Channel, {through: 'UserChannel'});
+        models.User.hasMany(models.Message, { foreignKey: 'userId'});
+    };
+
     return User;
 };
