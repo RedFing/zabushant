@@ -3,11 +3,12 @@
 var fs        = require('fs');
 var path      = require('path');
 var Sequelize = require('sequelize');
+var dbConfig  = require('../config/db');
 var basename  = path.basename(__filename);
 var env       = process.env.NODE_ENV || 'development';
 var db        = {};
 
-var sequelize = new Sequelize('zabushant', 'postgres', 'root', {
+var sequelize = new Sequelize(db.dbName, db.dbUser, db.dbPassword, {
     host: "127.0.0.1",
     dialect: 'postgres'
     }
