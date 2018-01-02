@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import {Grid, Form, Header, Image, Button, Message, Segment} from 'semantic-ui-react';
-import axios from 'axios';
+import { Grid, Header, Segment, Button, Message, Form } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import Cover from '../cover/Cover';
-import Logo from '../../images/logo.png';
-import './Login.css';
 
-class Login extends Component {
+class Register extends Component {
     constructor(props){
         super(props);
         this.state = {
             username: '',
             password: '',
+            confirmPassword: '',
+            email: '',
         }
-        this.handleLogin = this.handleLogin.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
@@ -27,24 +24,14 @@ class Login extends Component {
         });
     }
 
-    handleLogin() {
-        const { username, password } = this.state;
-        axios.post('/login', { username, password })
-            .then(res => {
-               console.log(res.data.token);
-            });
-    }
-
     render() {
         return (
             <div>
-                <Grid centered>
-                    <Grid.Column mobile={16} tablet={8} computer={6}>
-                        <Image className='logo' src={Logo} size='medium'/>
+                <Grid>
+                    <Grid.Column mobile={16} tablet={8} computer={4}>
                         <Header as='h2' color='teal' textAlign='center'>
-                            Log-in to your account
+                            Please complete your registration by filling the form
                         </Header>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc scelerisque at nulla eu porttitor. Fusce rutrum volutpat magna, sit amet volutpat odio. Morbi venenatis dolor sem, et pulvinar nulla sagittis quis. Pellentesque et condimentum diam, in fringilla ex. Praesent quis vestibulum urna. Duis eleifend orci at erat tristique, ut laoreet nulla imperdiet. Integer quis libero ac nunc lobortis ultrices in eu quam. </p>
                         <Form size='large'>
                             <Segment raised>
                                 <Form.Input
@@ -58,6 +45,15 @@ class Login extends Component {
                                 />
                                 <Form.Input
                                     fluid
+                                    icon='mail'
+                                    iconPosition='left'
+                                    placeholder='E-mail address'
+                                    onChange={this.handleInputChange}
+                                    value={this.state.username}
+                                    name="email"
+                                />
+                                <Form.Input
+                                    fluid
                                     icon='lock'
                                     iconPosition='left'
                                     placeholder='Password'
@@ -66,20 +62,28 @@ class Login extends Component {
                                     value={this.state.password}
                                     name="password"
                                 />
+                                <Form.Input
+                                    fluid
+                                    icon='lock'
+                                    iconPosition='left'
+                                    placeholder='Confirm password'
+                                    type='password'
+                                    onChange={this.handleInputChange}
+                                    value={this.state.password}
+                                    name="confirmPassword"
+                                />
 
                                 <Button
                                     color='teal'
                                     fluid size='large'
                                     onClick={this.handleLogin}
-                                >Login</Button>
+                                >
+                                    Register</Button>
                             </Segment>
                         </Form>
                         <Message>
-                            Not registered? <Link to="/register"> Sign up </Link>
+                            Already registered? <Link to="/login"> Sign in </Link>
                         </Message>
-                    </Grid.Column>
-                    <Grid.Column mobile={16} tablet={8} computer={10}>
-                        <Cover/>
                     </Grid.Column>
                 </Grid>
             </div>
@@ -87,4 +91,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default Register;
