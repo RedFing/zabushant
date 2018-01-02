@@ -28,7 +28,7 @@ class Register extends Component {
         return (
             <div>
                 <Grid>
-                    <Grid.Column mobile={16} tablet={8} computer={4}>
+                    <Grid.Column mobile={16} tablet={8} computer={6}>
                         <Header as='h2' color='teal' textAlign='center'>
                             Please complete your registration by filling the form
                         </Header>
