@@ -5,28 +5,17 @@ import Channels from './Channels';
 import DirectMessages from './DirectMessages';
 
 class Sidebar extends Component {
-    state = {}
-
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
     render() {
-        const { activeItem } = this.state;
         return (
-            <Grid columns={3} stretched>
-                <Grid.Column>
+            <Grid>
+                <Grid.Column style={{width:'250px'}}>
                     <Menu vertical>
-                        <Menu.Item>
-                            Channels
-                            <Menu.Menu>
-                                <Channels/>
-                            </Menu.Menu>
-                        </Menu.Item>
-                        <Menu.Item>
-                            Direct messages
-                            <Menu.Menu>
-                                <DirectMessages/>
-                            </Menu.Menu>
-                        </Menu.Item>
+                        <Channels/>
+                        <DirectMessages/>
                     </Menu>
+                </Grid.Column>
+                <Grid.Column style={{background:'red', width:'calc(100% - 250px)'}}>
+                    aaa
                 </Grid.Column>
             </Grid>
         );

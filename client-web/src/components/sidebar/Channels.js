@@ -15,14 +15,17 @@ class Channels extends Component {
     render() {
         const { activeItem, channels } = this.state;
         return (
-            <div>
-                {channels.map(channel =>
-                        <Menu.Item name={channel} active={activeItem === {channel}} onClick={this.handleItemClick}>
+                    <Menu.Item>
+                        Channels <Icon name='add circle'/>
+                        <Menu.Menu>
+                            {channels.map(channel =>
+                         <Menu.Item name={channel} active={activeItem === {channel}} onClick={this.handleItemClick}>
                             <Icon name='hashtag'  />
                             {channel}
-                        </Menu.Item>
+                         </Menu.Item>
                 )}
-            </div>
+                        </Menu.Menu>
+                    </Menu.Item>
         );
     }
 }

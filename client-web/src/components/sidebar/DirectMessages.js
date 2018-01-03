@@ -15,14 +15,17 @@ class DirectMessages extends Component {
     render() {
         const { activeItem, directMsg } = this.state;
         return (
-            <div>
+                <Menu.Item>
+                    Direct messages <Icon name='add circle'/>
+                    <Menu.Menu>
                 {directMsg.map(directMsg =>
                     <Menu.Item name='{directMsg}' active={activeItem === {directMsg}} onClick={this.handleItemClick}>
                         <Icon name='circle'  />
                         {directMsg}
                     </Menu.Item>
                 )}
-            </div>
+                    </Menu.Menu>
+                </Menu.Item>
         );
     }
 }
