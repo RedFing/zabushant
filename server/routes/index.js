@@ -1,13 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var loginController = require('../controllers/loginController');
+
 // TODO: generate token
 const TOKEN = '12345';
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-router.post('/login', function (req,res,next) {
+router.post('/login', loginController.post());
+router.post('/login2', function (req,res,next) {
    const { username, password} = req.body;
    if (!username || !password) {
      res.status(400);
@@ -21,7 +24,6 @@ router.post('/login', function (req,res,next) {
        where: { username, password },
        attributes: ['id', 'username']
    }).then(user => {
-       console.log(user);
        res.send({ token: TOKEN });
    }).catch(err => res.send('err'));
 });
@@ -40,7 +42,6 @@ router.post('/register', function (req,res,next) {
    //TODO better error handling
    models.User.create({ username, email, password })
       .then((user) => {
-          console.log('user created with id: ', user.get('id'));
           res.send({ status: 'OK'});
       })
       .catch(err =>{
@@ -50,5 +51,7 @@ router.post('/register', function (req,res,next) {
 
 });
 
-
+router.get('/message', function (req,res,next) {
+ res.send({ status: 'OK'});
+});
 module.exports = router;
