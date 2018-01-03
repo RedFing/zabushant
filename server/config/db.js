@@ -1,5 +1,5 @@
 module.exports={
     dbName: 'zabushant',
     dbUser: 'postgres',
-    dbPassword: 'root'
+    dbPassword: '0000'
 };

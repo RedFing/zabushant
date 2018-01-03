@@ -113,5 +113,6 @@ const checkAuth = () => (req,res,next) => {
 
 module.exports  = {
   executeLogin: executeLogin,
-  checkAuth: checkAuth
+  checkAuth: checkAuth,
+  hashPassword: hashPassword
 };
