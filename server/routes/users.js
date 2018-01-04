@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models  = require('../models');
+var auth = require('../util/auth');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -19,10 +20,15 @@ router.get('/:id', function (req,res,next) {
 });
 router.post('/', function(req,res,next){
   const { username, email, password } = req.body;
-  models.User.create({ username, email, password })
+  if (!username || !email || !password) {
+      res.status(400).send({ err: 'Bad register'});
+      return;
+  }
+  const encryptedPassword = auth.hashPassword(password);
+  models.User.create({ username, email, password: encryptedPassword })
       .then((user) => {
         res.send({ status: 'OK'});
       })
-      .catch(err => res.send({ status: 'ERROR'}));
+      .catch(err => res.status(400).send({ err: 'Bad register.'}));
 });
 module.exports = router;

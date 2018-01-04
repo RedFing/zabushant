@@ -1,0 +1,10 @@
+.loadingLogo {
+    animation: spin 1s;
+    width:40px;
+    display: block;
+    margin: auto;
+    margin-top: 10%;
+}
+@keyframes spin {
+    100% {transform: rotate(360deg)};
+}

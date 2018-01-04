@@ -8,7 +8,7 @@ const UTF8 = 'utf8';
 const models = require('../models');
 
 const PROTECTED_ROUTES = [
-  '/message', '/users'
+  '/message'
 ];
 
 
@@ -66,19 +66,6 @@ const validateAndRefreshToken = async token => {
   }
 };
 
-const executeLogin = (username, password) =>
-
-     models.User.findOne({
-      where: { username, password},
-      attributes: [ 'id', 'username']
-    }).then(user => {
-      if (!user) throw new Error('bad login');
-      return {
-        token: refreshToken(username),
-        username: username,
-        id: user.id
-      };
-    }).catch(err => err);
 
 
 
@@ -112,7 +99,6 @@ const checkAuth = () => (req,res,next) => {
 
 
 module.exports  = {
-  executeLogin: executeLogin,
   checkAuth: checkAuth,
   hashPassword: hashPassword
 };

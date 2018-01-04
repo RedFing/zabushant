@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Header, Segment, Button, Message, Form } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class Register extends Component {
     constructor(props){
@@ -10,8 +11,10 @@ class Register extends Component {
             password: '',
             confirmPassword: '',
             email: '',
+            success: null,
         }
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleRegister = this.handleRegister.bind(this);
     }
 
     handleInputChange(event) {
@@ -24,7 +27,25 @@ class Register extends Component {
         });
     }
 
+    handleRegister(){
+        const { username, password, confirmPassword, email } = this.state;
+        //TODO add validation
+        if (password !== confirmPassword) return;
+        if (!username || !password || !confirmPassword || !email) return;
+        axios.post('/users', { username, password, email })
+            .then(res => {
+                this.setState({ success: true });
+            })
+            .catch( err => this.setState({ success: false }));
+    }
+
     render() {
+        if (this.state.success){
+            return <div>Success</div>
+        }
+        if (this.state.success === false ) {
+            return <div>Error</div>
+        }
         return (
             <div>
                 <Grid>
@@ -49,7 +70,7 @@ class Register extends Component {
                                     iconPosition='left'
                                     placeholder='E-mail address'
                                     onChange={this.handleInputChange}
-                                    value={this.state.username}
+                                    value={this.state.email}
                                     name="email"
                                 />
                                 <Form.Input
@@ -69,14 +90,14 @@ class Register extends Component {
                                     placeholder='Confirm password'
                                     type='password'
                                     onChange={this.handleInputChange}
-                                    value={this.state.password}
+                                    value={this.state.confirmPassword}
                                     name="confirmPassword"
                                 />
 
                                 <Button
                                     color='teal'
                                     fluid size='large'
-                                    onClick={this.handleLogin}
+                                    onClick={this.handleRegister}
                                 >
                                     Register</Button>
                             </Segment>

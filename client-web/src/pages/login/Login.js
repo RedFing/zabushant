@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Grid, Form, Header, Image, Button, Message, Segment, Container} from 'semantic-ui-react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Cover from '../cover/Cover';
 import Logo from '../../images/logo.png';
 import './Login.css';
@@ -12,6 +12,7 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
+            success: null,
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -31,11 +32,15 @@ class Login extends Component {
         const { username, password } = this.state;
         axios.post('/login', { username, password })
             .then(res => {
+                this.setState({ success: true });
                console.log(res.data.token);
             });
     }
 
     render() {
+        if ( this.state.success) {
+            return <Redirect to='/'/>
+            }
         return (
             <div>
                 <Container>

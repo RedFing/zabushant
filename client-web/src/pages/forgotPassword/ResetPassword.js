@@ -1,6 +1,7 @@
 import React from 'react';
-import { Container, Form} from 'semantic-ui-react';
+import { Container, Form, Modal } from 'semantic-ui-react';
 import axios from 'axios';
+import Loader from '../../components/loader/Loader';
 
 
 export default class ResetPassword extends React.Component{
@@ -17,7 +18,7 @@ export default class ResetPassword extends React.Component{
     }
     componentDidMount(){
         const { token } = this.props.match.params;
-        axios.post(`/checkresetpassword/`, { token })
+        axios.get(`/forgot-password/reset-password/${token}`)
             .then(res => {
                 this.setState({
                     loading: false
@@ -31,7 +32,7 @@ export default class ResetPassword extends React.Component{
         const { password, confirmPassword} = this.state;
         // TODO add error if pass's dont match & validation
         if (password !== confirmPassword) return;
-        axios.post('/reset-password', { password, confirmPassword, token })
+        axios.post('/forgot-password/reset-password', { password, confirmPassword, token })
             .then(res => {
                 this.setState({ success: true});
             }).catch(err => {
@@ -44,7 +45,7 @@ export default class ResetPassword extends React.Component{
             return <div>Error!</div>
         };
         if (this.state.loading){
-            return <div>Loading</div>
+            return <Loader/>
         }
 
         if (this.state.success){
@@ -54,9 +55,12 @@ export default class ResetPassword extends React.Component{
             return <div>Error!</div>
         };
         return (
-            <Container>
+            <Container align='center'>
                 <h1>Reset password</h1>
-                <Form>
+                <p>We’ll send you an email to confirm
+                    your address and find existing workspaces
+                    you’ve joined or can join.</p>
+                <Form align='center'>
                     <Form.Group>
                         <Form.Input
                             placeholder="your password..."

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import { Container, Form} from 'semantic-ui-react';
+import { Container, Form, Image } from 'semantic-ui-react';
 import axios from 'axios';
+import forgotPass from '../../images/forgotPass.svg';
+
 export default class ForgotPassword extends Component{
     constructor(props){
         super(props);
@@ -30,21 +32,22 @@ export default class ForgotPassword extends Component{
             return <SuccessMessage />
         }
         return(
-            <Container>
+            <Container align='center' style={{width:'400px', display:'block', margin:'auto', marginTop:'80px'}}>
+                <Image src={forgotPass} centered size='small' />
                 <h1>Forgot password</h1>
                 <p>We’ll send you an email to confirm your address and find
-                    existing workspaces you’ve joined or can join.
-                    Enter your email address
+                    existing profile.
+                    Please enter your email address.
                 </p>
                 <Form>
                     <Form.Group>
-                        <Form.Input
+                        <Form.Input style={{width:'300px'}}
                             placeholder="your email..."
                             value={this.state.email}
                             onChange={(e)=> this.setState({ email: e.target.value})}
                             type="email"
                         />
-                        <Form.Button
+                        <Form.Button style={{width:'100px'}}
                             onClick={this.handleEmailSubmit}
                         >
                         Send
