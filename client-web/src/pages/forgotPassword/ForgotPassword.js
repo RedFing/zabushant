@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import { Container, Form, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import forgotPass from '../../images/forgotPass.svg';
+import './ForgotPassword.css';
+import Success from '../../components/success/Success';
+import Error from '../../components/error/Error';
 
 export default class ForgotPassword extends Component{
     constructor(props){
@@ -10,6 +13,16 @@ export default class ForgotPassword extends Component{
             email: '',
             success: null,
             error: false,
+
+            subjectSuccess: 'Please check your email.',
+            paragrafSuccess: 'We have sent you an email.',
+            linkSuccess: '/login',
+            buttonTextSuccess: 'Go to login page!',
+
+            subjectError: 'Something went wrong.',
+            paragrafError: 'We have sent you an email.',
+            linkError: '/register',
+            buttonTextError: 'Sign up!',
         };
         this.handleEmailSubmit = this.handleEmailSubmit.bind(this);
     }
@@ -25,14 +38,34 @@ export default class ForgotPassword extends Component{
     }
 
     render(){
+        const { subjectSuccess,
+                paragrafSuccess,
+                linkSuccess,
+                buttonTextSuccess,
+                subjectError,
+                paragrafError,
+                linkError,
+                buttonTextError
+              } = this.state;
+
         if (this.state.success===false){
-            return <ErrorMessage />
+            return <Error
+                        subject={subjectError}
+                        paragraf={paragrafError}
+                        link={linkError}
+                        buttonText={buttonTextError}
+                    />
         }
         if (this.state.success){
-            return <SuccessMessage />
+            return <Success
+                        subject={subjectSuccess}
+                        paragraf={paragrafSuccess}
+                        link={linkSuccess}
+                        buttonText={buttonTextSuccess}
+                   />
         }
         return(
-            <Container align='center' style={{width:'400px', display:'block', margin:'auto', marginTop:'80px'}}>
+            <Container align='center' className="container-position">
                 <Image src={forgotPass} centered size='small' />
                 <h1>Forgot password</h1>
                 <p>We’ll send you an email to confirm your address and find
@@ -58,12 +91,3 @@ export default class ForgotPassword extends Component{
         );
     }
 }
-
-
-const SuccessMessage = (props) => (
-    <div>Check your email!</div>
-);
-
-const ErrorMessage = (props) => (
-    <div>There was an error.</div>
-);

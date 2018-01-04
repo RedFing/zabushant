@@ -2,6 +2,8 @@ import React from 'react';
 import { Container, Form, Modal } from 'semantic-ui-react';
 import axios from 'axios';
 import Loader from '../../components/loader/Loader';
+import Success from '../../components/success/Success';
+import Error from '../../components/error/Error';
 
 
 export default class ResetPassword extends React.Component{
@@ -13,6 +15,16 @@ export default class ResetPassword extends React.Component{
             password: '',
             confirmPassword: '',
             success: null,
+
+            subjectSuccess: 'You have successfully reset your password.',
+            paragrafSuccess: 'You can sign in with new password.',
+            linkSuccess: '/login',
+            buttonTextSuccess: 'Go to login page!',
+
+            subjectError: 'Something went wrong.',
+            paragrafError: 'You have not reset your password.',
+            linkError: '/register',
+            buttonTextError: 'Sign up!',
         };
         this.handlePasswordRecoverySubmit = this.handlePasswordRecoverySubmit.bind(this);
     }
@@ -41,18 +53,43 @@ export default class ResetPassword extends React.Component{
 
     }
     render(){
+        const { subjectSuccess,
+                paragrafSuccess,
+                linkSuccess,
+                buttonTextSuccess,
+                subjectError,
+                paragrafError,
+                linkError,
+                buttonTextError
+            } = this.state;
+
         if (this.state.error){
-            return <div>Error!</div>
+            return <Error
+                        subject={subjectError}
+                        paragraf={paragrafError}
+                        link={linkError}
+                        buttonText={buttonTextError}
+                    />
         };
         if (this.state.loading){
             return <Loader/>
         }
 
         if (this.state.success){
-            return <div>Success!</div>
+            return <Success
+                        subject={subjectSuccess}
+                        paragraf={paragrafSuccess}
+                        link={linkSuccess}
+                        buttonText={buttonTextSuccess}
+                    />
         }
         if (this.state.success===false){
-            return <div>Error!</div>
+            return <Error
+                        subject={subjectError}
+                        paragraf={paragrafError}
+                        link={linkError}
+                        buttonText={buttonTextError}
+                    />
         };
         return (
             <Container align='center'>
