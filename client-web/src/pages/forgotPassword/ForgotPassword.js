@@ -5,6 +5,7 @@ import forgotPass from '../../images/forgotPass.svg';
 import './ForgotPassword.css';
 import Success from '../../components/success/Success';
 import Error from '../../components/error/Error';
+import Header from '../../components/header/Header';
 
 export default class ForgotPassword extends Component{
     constructor(props){
@@ -16,8 +17,8 @@ export default class ForgotPassword extends Component{
 
             subjectSuccess: 'Please check your email.',
             paragrafSuccess: 'We have sent you an email.',
-            linkSuccess: '/login',
-            buttonTextSuccess: 'Go to login page!',
+            linkSuccess: '',
+            buttonTextSuccess: '',
 
             subjectError: 'Something went wrong.',
             paragrafError: 'We have sent you an email.',
@@ -65,6 +66,8 @@ export default class ForgotPassword extends Component{
                    />
         }
         return(
+            <div>
+                <Header/>
             <Container align='center' className="container-position">
                 <Image src={forgotPass} centered size='small' />
                 <h1>Forgot password</h1>
@@ -88,6 +91,7 @@ export default class ForgotPassword extends Component{
                     </Form.Group>
                 </Form>
             </Container>
+            </div>
         );
     }
 }

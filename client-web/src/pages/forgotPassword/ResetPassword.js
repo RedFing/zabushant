@@ -23,8 +23,8 @@ export default class ResetPassword extends React.Component{
 
             subjectError: 'Something went wrong.',
             paragrafError: 'You have not reset your password.',
-            linkError: '/register',
-            buttonTextError: 'Sign up!',
+            linkError: '/forgot-password',
+            buttonTextError: 'Try again!',
         };
         this.handlePasswordRecoverySubmit = this.handlePasswordRecoverySubmit.bind(this);
     }
