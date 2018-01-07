@@ -8,7 +8,7 @@ const UTF8 = 'utf8';
 const models = require('../models');
 
 const PROTECTED_ROUTES = [
-  '/message'
+  '/message', '/get-current-user'
 ];
 
 
@@ -100,5 +100,6 @@ const checkAuth = () => (req,res,next) => {
 
 module.exports  = {
   checkAuth: checkAuth,
-  hashPassword: hashPassword
+  hashPassword: hashPassword,
+  refreshToken: refreshToken
 };

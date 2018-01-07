@@ -33,13 +33,14 @@ class Login extends Component {
         axios.post('/login', { username, password })
             .then(res => {
                 this.setState({ success: true });
+                localStorage.setItem('token', res.data.token);
                console.log(res.data.token);
             });
     }
 
     render() {
         if ( this.state.success) {
-            return <Redirect to='/'/>
+            return <div>Success</div>;
             }
         return (
             <div>

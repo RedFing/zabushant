@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');
 var models = require("../models");
+var socketIo = require('socket.io');
 /**
  * Get port from environment and store in Express.
  */
@@ -20,6 +21,32 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = socketIo(server);
+var userQueries = require('../queries/userQueries');
+var clients = [];
+io.on('connection', socket => {
+    console.log('Connected');
+
+    socket.on('disconnect', () => {
+      console.log('Client disconnected!');
+    });
+
+    socket.on('Register username', (data) => {
+      console.log(data);
+      let socketWithUser = socket;
+      socketWithUser.user = data;
+      clients.push(socketWithUser);
+    });
+    socket.on('message', (messageObj) => {
+      const {userId, content, channelId, username } = messageObj;
+      userQueries.insertMessage(userId, channelId, content)
+          .then((msg) => {
+            const createdAt = mes.get('createdAt');
+            // TODO return created at
+            socket.emit('received message', {...messageObj, createdAt});
+          })
+    });
+});
 
 /**
  * Listen on provided port, on all network interfaces.

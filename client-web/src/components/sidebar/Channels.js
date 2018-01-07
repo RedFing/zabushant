@@ -5,23 +5,21 @@ import './Sidebar.css';
 class Channels extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            channels: ['kanal1', 'kanal2'],
-        }
     }
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+    handleItemClick = (e, { name }) => {
+        this.props.onChannelChange(name);
+    };
 
     render() {
-        const { activeItem, channels } = this.state;
         return (
                     <Menu.Item>
                         Channels <Icon name='add circle'/>
                         <Menu.Menu>
-                            {channels.map(channel =>
-                         <Menu.Item name={channel} active={activeItem === {channel}} onClick={this.handleItemClick}>
+                            {this.props.channels.map(channel =>
+                         <Menu.Item name={channel.ChannelId} onClick={this.handleItemClick}>
                             <Icon name='hashtag'  />
-                            {channel}
+                            {channel.name}
                          </Menu.Item>
                 )}
                         </Menu.Menu>
