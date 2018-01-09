@@ -1,4 +1,33 @@
-div.ui.stacked.segment {
+div.ui.segment {
     margin:0 !important;
-    width: 100% !important;
+    font-size: 16px !important;
+    font-weight: bold;
+    height: 75px;
+}
+.chat-body {
+    height: calc(100% - 150px);
+    overflow-y: scroll;
+    background-color: white;
+    padding:20px;
+}
+div.content {
+    background-color: white !important;
+}
+div.header {
+    border:none !important;
+    padding: 0 !important;
+    background-color: white !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+div.ui.fluid.input {
+    padding: 10px !important;
+    background-color: white !important;
+    height: 75px;
+}
+div.ui.fluid.input input {
+    outline: none !important;
+    border: 2px solid black !important;
+    background-color: none !important;
+    padding: 15px !important;
 }

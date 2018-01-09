@@ -4,12 +4,19 @@ import './Sidebar.css';
 class DirectMessages extends Component {
     constructor(props){
         super(props);
-
+        this.getDMName = this.getDMName.bind(this);
     }
 
     handleItemClick = (e, { name }) => {
         this.props.onChannelChange(name);
     };
+    getDMName = (name) => {
+        // 'mux - haris'
+        const userArr = name.split(' - ');
+        if (userArr && userArr[0]===userArr[1]) return 'me';
+        if (userArr && userArr[0]) return userArr[0]===this.props.username?userArr[1]:userArr[0];
+        return name;
+    }
     render() {
         return (
                 <Menu.Item>
@@ -18,7 +25,7 @@ class DirectMessages extends Component {
                 {this.props.channels.map(directMsg =>
                     <Menu.Item name={directMsg.ChannelId}  onClick={this.handleItemClick}>
                         <Icon name='circle'  />
-                        {directMsg.name}
+                        {this.getDMName(directMsg.name)}
                     </Menu.Item>
                 )}
                     </Menu.Menu>

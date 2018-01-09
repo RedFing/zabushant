@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom'
 import './Sidebar.css';
 
 class Channels extends Component {
@@ -14,7 +15,7 @@ class Channels extends Component {
     render() {
         return (
                     <Menu.Item>
-                        Channels <Icon name='add circle'/>
+                        Channels <Link to='/create-channel'><Icon name='add circle'/></Link>
                         <Menu.Menu>
                             {this.props.channels.map(channel =>
                          <Menu.Item name={channel.ChannelId} onClick={this.handleItemClick}>

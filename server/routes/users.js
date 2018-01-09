@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var models  = require('../models');
 var auth = require('../util/auth');
+const userQueries = require('../queries/userQueries');
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -27,6 +29,7 @@ router.post('/', function(req,res,next){
   const encryptedPassword = auth.hashPassword(password);
   models.User.create({ username, email, password: encryptedPassword })
       .then((user) => {
+          userQueries.createDirectMessageChannelsForNewUser(user.id, user.username).then();
         res.send({ status: 'OK'});
       })
       .catch(err => res.status(400).send({ err: 'Bad register.'}));

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var loginController = require('../controllers/loginController');
 var registerContoller = require('../controllers/registerController');
+var models = require('../models');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -46,6 +47,19 @@ router.get('/get-all-messages/:channelId', function (req,res,next) {
     });
 });
 
+router.get('/get-all-users', function (req, res, next) {
+    models.User.findAll({ attributes: ['id', 'username']})
+        .then( users => {
+            res.send(users);
+        }).catch(err => res.status(400).send({err: 'Bad request!'}));
+});
 
+router.post('/create-channel', function(req,res,next){
+    const { users, channelName } = req.body;
 
+    userQueries.createGroupChannel(channelName,users)
+        .then( _ => {
+            res.send({ status: 'OK'});
+        }).catch(err => res.status(400).send({ err: 'Bad request' }));
+});
 module.exports = router;

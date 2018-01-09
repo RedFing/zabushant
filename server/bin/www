@@ -41,9 +41,9 @@ io.on('connection', socket => {
       const {userId, content, channelId, username } = messageObj;
       userQueries.insertMessage(userId, channelId, content)
           .then((msg) => {
-            const createdAt = mes.get('createdAt');
+            //const createdAt = mes.get('createdAt');
             // TODO return created at
-            socket.emit('received message', {...messageObj, createdAt});
+            io.sockets.emit('received message', messageObj );
           })
     });
 });

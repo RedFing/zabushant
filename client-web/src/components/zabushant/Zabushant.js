@@ -15,7 +15,8 @@ class Zabushant extends Component {
             user: {},
             endpoint: "http://127.0.0.1:5000",
             loading: true,
-            socket: {}
+            socket: {},
+
         }
     }
     onChannelChange = (channelId) => {
@@ -76,7 +77,7 @@ class Zabushant extends Component {
                                        channelMessages: res2.data
                                    }
                                });
-                               this.setState({ messages: all, loading: false});
+                               this.setState({ currentChannel: res.data[0].ChannelId, messages: all, loading: false});
 
                            })
                            .catch(err => this.setState({ err: true}));
@@ -89,7 +90,7 @@ class Zabushant extends Component {
         const { messages, currentChannel} = this.state;
         return (
             <Grid>
-                <Sidebar onChannelChange={this.onChannelChange} channels={this.state.channels}/>
+                <Sidebar username={this.state.user.username} onChannelChange={this.onChannelChange} channels={this.state.channels}/>
                 <Chat
                     sendMessage={this.sendMessage}
                     channelName={this.getChannelName()}
