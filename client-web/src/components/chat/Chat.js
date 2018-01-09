@@ -17,18 +17,6 @@ class Chat extends Component {
         }
     };
 
-    scrollToBottom = () => {
-        this.el.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    componentDidMount() {
-        this.scrollToBottom();
-    }
-
-    componentDidUpdate() {
-        this.scrollToBottom();
-    }
-
     render() {
         const { messageInput } = this.state;
         const { messages } = this.props;
@@ -39,7 +27,7 @@ class Chat extends Component {
                     <Segment>
                         #{this.props.channelName}
                     </Segment>
-                    <div className='chat-body' ref={(el) => { this.el = el; }}>
+                    <div className='chat-body'>
                         <Item.Group>
                             {messages.channelMessages.map( msg =>
                             <Item>
