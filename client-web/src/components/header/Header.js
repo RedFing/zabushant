@@ -5,7 +5,7 @@ import Logo from '../../images/logo.png';
 export default class Header extends Component {
     render(){
         return(
-            <div className='header'>
+            <div className='header-logo'>
                 <a href='/'>
                 <img src={Logo} />
                 </a>

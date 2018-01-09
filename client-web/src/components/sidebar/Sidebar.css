@@ -15,6 +15,7 @@ div.item {
     border-bottom: 1px solid #8888888;
     border-radius: 0;
     box-sizing: border-box !important;
+    font-weight: bold !important;
 }
 a.item {
     color: white !important;
@@ -27,4 +28,8 @@ a.item:hover {
 a.active {
     background-color: #f2f2f2 !important;
     color: #0c9999 !important;
+}
+i.add.circle.icon {
+    float: right !important;
+    color: white !important;
 }

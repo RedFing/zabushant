@@ -40,7 +40,7 @@ class Login extends Component {
 
     render() {
         if ( this.state.success) {
-            return <div>Success</div>;
+            return <Redirect to='/' />;
             }
         return (
             <div>

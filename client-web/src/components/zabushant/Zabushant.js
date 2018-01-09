@@ -4,6 +4,7 @@ import Sidebar from '../sidebar/Sidebar';
 import Chat from '../chat/Chat';
 import socketClient from 'socket.io-client';
 import axios from 'axios';
+import Loader from '../../components/loader/Loader';
 
 class Zabushant extends Component {
     constructor(props){
@@ -87,7 +88,8 @@ class Zabushant extends Component {
     }
 
     render() {
-        const { messages, currentChannel} = this.state;
+        const { messages, currentChannel, loading } = this.state;
+        if (loading) return <Loader/>
         return (
             <Grid>
                 <Sidebar username={this.state.user.username} onChannelChange={this.onChannelChange} channels={this.state.channels}/>

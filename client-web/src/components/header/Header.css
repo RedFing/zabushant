@@ -1,9 +1,9 @@
-.header {
+.header-logo {
     background-color: #f4f6f9;
     box-shadow: 2px 2px 5px #888888;
     padding:20px;
 }
-.header img {
+.header-logo img {
     width:150px;
     display: block;
     margin: auto;

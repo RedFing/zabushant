@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Grid, Header, Segment, Button, Message, Form } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Grid, Header, Segment, Button, Message, Form, Container, Image } from 'semantic-ui-react';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import Logo from '../../images/logo.png';
+import Cover from '../../pages/cover/Cover';
 
 class Register extends Component {
     constructor(props){
@@ -41,73 +43,80 @@ class Register extends Component {
 
     render() {
         if (this.state.success){
-            return <div>Success</div>
+            return <Redirect to='/login' />
         }
         if (this.state.success === false ) {
             return <div>Error</div>
         }
         return (
             <div>
-                <Grid>
-                    <Grid.Column mobile={16} tablet={8} computer={6}>
-                        <Header as='h2' color='teal' textAlign='center'>
-                            Please complete your registration by filling the form
-                        </Header>
-                        <Form size='large'>
-                            <Segment raised>
-                                <Form.Input
-                                    fluid
-                                    icon='user'
-                                    iconPosition='left'
-                                    placeholder='Username'
-                                    onChange={this.handleInputChange}
-                                    value={this.state.username}
-                                    name="username"
-                                />
-                                <Form.Input
-                                    fluid
-                                    icon='mail'
-                                    iconPosition='left'
-                                    placeholder='E-mail address'
-                                    onChange={this.handleInputChange}
-                                    value={this.state.email}
-                                    name="email"
-                                />
-                                <Form.Input
-                                    fluid
-                                    icon='lock'
-                                    iconPosition='left'
-                                    placeholder='Password'
-                                    type='password'
-                                    onChange={this.handleInputChange}
-                                    value={this.state.password}
-                                    name="password"
-                                />
-                                <Form.Input
-                                    fluid
-                                    icon='lock'
-                                    iconPosition='left'
-                                    placeholder='Confirm password'
-                                    type='password'
-                                    onChange={this.handleInputChange}
-                                    value={this.state.confirmPassword}
-                                    name="confirmPassword"
-                                />
+                <Container>
+                    <Grid centered>
+                        <Grid.Column mobile={16} tablet={8} computer={6}>
+                            <Image className='logo' src={Logo} size='medium'/>
+                            <Header as='h2' color='teal' textAlign='center'>
+                                Please complete your registration by filling the form
+                            </Header>
+                            <Form size='large'>
+                                <Segment raised>
+                                    <Form.Input
+                                        fluid
+                                        icon='user'
+                                        iconPosition='left'
+                                        placeholder='Username'
+                                        onChange={this.handleInputChange}
+                                        value={this.state.username}
+                                        name="username"
+                                    />
+                                    <Form.Input
+                                        fluid
+                                        icon='mail'
+                                        iconPosition='left'
+                                        placeholder='E-mail address'
+                                        onChange={this.handleInputChange}
+                                        value={this.state.email}
+                                        name="email"
+                                    />
+                                    <Form.Input
+                                        fluid
+                                        icon='lock'
+                                        iconPosition='left'
+                                        placeholder='Password'
+                                        type='password'
+                                        onChange={this.handleInputChange}
+                                        value={this.state.password}
+                                        name="password"
+                                    />
+                                    <Form.Input
+                                        fluid
+                                        icon='lock'
+                                        iconPosition='left'
+                                        placeholder='Confirm password'
+                                        type='password'
+                                        onChange={this.handleInputChange}
+                                        value={this.state.confirmPassword}
+                                        name="confirmPassword"
+                                    />
 
-                                <Button
-                                    color='teal'
-                                    fluid size='large'
-                                    onClick={this.handleRegister}
-                                >
-                                    Register</Button>
-                            </Segment>
-                        </Form>
-                        <Message>
-                            Already registered? <Link to="/login"> Sign in </Link>
-                        </Message>
-                    </Grid.Column>
-                </Grid>
+                                    <Button
+                                        color='teal'
+                                        fluid size='large'
+                                        onClick={this.handleRegister}
+                                    >
+                                        Register</Button>
+                                </Segment>
+                            </Form>
+                            <Message>
+                                Already registered? <Link to="/login"> Sign in </Link>
+                            </Message>
+                        </Grid.Column>
+                        <Grid.Column mobile={16} tablet={8} computer={10}>
+                            <Cover/>
+                        </Grid.Column>
+                    </Grid>
+                </Container>
             </div>
+
         );
     }
 }

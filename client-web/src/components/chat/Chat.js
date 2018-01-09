@@ -24,7 +24,7 @@ class Chat extends Component {
         if (!( messages && messages.channelMessages )) return <div>loading</div>
         return (
                 <Grid.Column style={{background:'#f2f2f2', width:'calc(100% - 250px)', position:'fixed', right:'0', height:'100%'}}>
-                    <Segment>
+                    <Segment className='chat-header'>
                         #{this.props.channelName}
                     </Segment>
                     <div className='chat-body'>
