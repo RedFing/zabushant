@@ -1,8 +1,9 @@
 div.ui.segment.chat-header {
     margin:0 !important;
-    font-size: 16px !important;
+    font-size: 24px !important;
     font-weight: bold;
     height: 75px;
+    margin-bottom: 10px !important;
 }
 .chat-body {
     height: calc(100% - 150px);
@@ -30,6 +31,7 @@ div.ui.fluid.input.input-msg input {
     border: 2px solid black !important;
     background-color: none !important;
     padding: 15px !important;
+    font-size: 20px !important;
 }
 div.ui.fluid.input.input-msg input::placeholder {
     color: black;
@@ -37,4 +39,8 @@ div.ui.fluid.input.input-msg input::placeholder {
 }
 a.avatar {
     margin-right: 10px !important;
+}
+i.arrow.circle.right.icon {
+    margin-right: 15px !important;
+    font-size: 25px !important;
 }

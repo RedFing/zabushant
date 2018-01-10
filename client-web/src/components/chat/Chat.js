@@ -37,7 +37,7 @@ class Chat extends Component {
 
         if (!( messages && messages.channelMessages )) return <div>loading</div>
         return (
-                <Grid.Column style={{ width:'calc(100% - 250px)', position:'fixed', right:'0', height:'100%'}}>
+                <Grid.Column style={{ width:'calc(100% - 250px)', position:'fixed', right:'0', height:'100vh'}}>
                     <Segment className='chat-header'>
                         #{this.props.channelName}
                     </Segment>
@@ -66,7 +66,7 @@ class Chat extends Component {
                         placeholder={'message '+this.props.channelName+'...'}
                         className='input-msg'
                         value={messageInput}
-
+                        icon='arrow circle right'
                         onChange={e => this.setState({ messageInput: e.target.value})}
                         onKeyPress={this.onSendMessage}
                     />
