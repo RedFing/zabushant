@@ -33,3 +33,16 @@ i.add.circle.icon {
     float: right !important;
     color: white !important;
 }
+div.ui.mini.fluid.input input {
+    background-color: transparent !important;
+    border: none !important;
+    color: white !important;
+}
+div.ui.mini.fluid.input input::placeholder {
+    color: white;
+    opacity: .7;
+}
+div.item.search-custom {
+    padding: 5px !important;
+}
+i.search.icon { color: white !important;}

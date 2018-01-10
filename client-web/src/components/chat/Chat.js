@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Grid, Segment, Item, Input } from 'semantic-ui-react';
+import { Grid, Segment, Item, Input, Comment } from 'semantic-ui-react';
+import StayScrolled from 'react-stay-scrolled';
 import './Chat.css';
+import moment from 'moment';
+import user from '../../images/users.svg';
 
 class Chat extends Component {
     constructor(props){
@@ -8,6 +11,13 @@ class Chat extends Component {
         this.state={
             messageInput:''
         };
+        this.scrollToBottom = this.scrollToBottom.bind(this);
+    }
+    componentDidUpdate(prevProps){
+        this.scrollToBottom();
+    }
+    componentDidMount(){
+        this.scrollToBottom();
     }
     onSendMessage = (event) => {
         if(event.key === 'Enter') {
@@ -16,28 +26,39 @@ class Chat extends Component {
             this.setState({messageInput: ''});
         }
     };
+    scrollToBottom(){
+        console.log(this.chatBody);
+        this.chatBody.scrollTop = this.chatBody.scrollHeight - this.chatBody.clientHeight;
 
+    }
     render() {
         const { messageInput } = this.state;
         const { messages } = this.props;
 
         if (!( messages && messages.channelMessages )) return <div>loading</div>
         return (
-                <Grid.Column style={{background:'#f2f2f2', width:'calc(100% - 250px)', position:'fixed', right:'0', height:'100%'}}>
+                <Grid.Column style={{ width:'calc(100% - 250px)', position:'fixed', right:'0', height:'100%'}}>
                     <Segment className='chat-header'>
                         #{this.props.channelName}
                     </Segment>
-                    <div className='chat-body'>
-                        <Item.Group>
-                            {messages.channelMessages.map( msg =>
-                            <Item>
-                                <Item.Content>
-                                    <Item.Header>{msg.username}</Item.Header>
-                                    <Item.Description>{msg.content}</Item.Description>
-                                </Item.Content>
-                            </Item>
-                            )}
-                        </Item.Group>
+                    <div
+                        className='chat-body'
+                        ref={(div) => this.chatBody = div}
+                    >
+                        <Comment.Group size='big'>
+                            <Comment>
+                                {messages.channelMessages.map( msg =>
+                                <Comment.Content>
+                                    <Comment.Avatar as='a' src={user} />
+                                    <Comment.Author as='a'>{msg.username}</Comment.Author>
+                                    <Comment.Metadata>
+                                        <span>{msg.createdAt}</span>
+                                    </Comment.Metadata>
+                                    <Comment.Text>{msg.content}</Comment.Text>
+                                </Comment.Content>
+                                    )}
+                            </Comment>
+                        </Comment.Group>
                     </div>
 
                     <Input

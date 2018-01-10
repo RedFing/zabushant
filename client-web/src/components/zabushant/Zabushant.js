@@ -5,6 +5,7 @@ import Chat from '../chat/Chat';
 import socketClient from 'socket.io-client';
 import axios from 'axios';
 import Loader from '../../components/loader/Loader';
+import { ToastContainer, toast} from 'react-toastify';
 
 class Zabushant extends Component {
     constructor(props){
@@ -91,13 +92,20 @@ class Zabushant extends Component {
         const { messages, currentChannel, loading } = this.state;
         if (loading) return <Loader/>
         return (
+            <div>
             <Grid>
-                <Sidebar username={this.state.user.username} onChannelChange={this.onChannelChange} channels={this.state.channels}/>
+                <Sidebar
+                    username={this.state.user.username}
+                    onChannelChange={this.onChannelChange}
+                    channels={this.state.channels}
+                    channelName={this.getChannelName()}
+                />
                 <Chat
                     sendMessage={this.sendMessage}
                     channelName={this.getChannelName()}
                     messages={messages.find(msgObj => msgObj.channelId === currentChannel)} />
             </Grid>
+            </div>
         );
     }
 }

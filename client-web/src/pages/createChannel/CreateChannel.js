@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Form} from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import Loader from '../../components/loader/Loader';
 
 export default class CreateChannel extends React.Component{
     constructor(props) {
@@ -38,7 +39,7 @@ export default class CreateChannel extends React.Component{
     }
 
     render(){
-        if(this.state.loading) return <div>Loading...</div>;
+        if(this.state.loading) return <Loader/>;
         if (this.state.success) return <Redirect to="/" />;
 
         return(

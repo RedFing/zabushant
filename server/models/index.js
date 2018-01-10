@@ -9,7 +9,7 @@ var env       = process.env.NODE_ENV || 'development';
 var db        = {};
 
 var sequelize = new Sequelize(dbConfig.dbName, dbConfig.dbUser, dbConfig.dbPassword, {
-    host: "127.0.0.1",
+    host: dbConfig.dbHost,
     dialect: 'postgres'
     }
 );

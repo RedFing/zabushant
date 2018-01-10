@@ -31,3 +31,10 @@ div.ui.fluid.input.input-msg input {
     background-color: none !important;
     padding: 15px !important;
 }
+div.ui.fluid.input.input-msg input::placeholder {
+    color: black;
+    font-weight: bold;
+}
+a.avatar {
+    margin-right: 10px !important;
+}

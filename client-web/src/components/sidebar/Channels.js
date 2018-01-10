@@ -17,8 +17,8 @@ class Channels extends Component {
                     <Menu.Item>
                         Channels <Link to='/create-channel'><Icon name='add circle'/></Link>
                         <Menu.Menu>
-                            {this.props.channels.map(channel =>
-                         <Menu.Item name={channel.ChannelId} onClick={this.handleItemClick}>
+                            {this.props.channels.map((channel) =>
+                         <Menu.Item active={this.props.channelName === channel.name} name={channel.ChannelId} onClick={this.handleItemClick}>
                             <Icon name='hashtag'  />
                             {channel.name}
                          </Menu.Item>
