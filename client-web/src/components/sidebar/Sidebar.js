@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Menu, Grid, Form, Icon } from 'semantic-ui-react';
+import {  Menu, Grid, Form, Icon, Dropdown } from 'semantic-ui-react';
 import './Sidebar.css';
 import Channels from './Channels';
 import DirectMessages from './DirectMessages';
@@ -14,6 +14,13 @@ class Sidebar extends Component {
         }
     }
     render() {
+        const trigger = <Icon name='list layout'/>;
+        const options = [
+            { key: 'user', text: 'Account', icon: 'user' },
+            { key: 'reset-password', text: 'Reset password', icon: 'lock',  as: 'a' },
+            { key: 'settings', text: 'Settings', icon: 'settings' },
+            { key: 'sign-out', text: 'Sign Out', icon: 'sign out' },
+        ];
         const { channels, username } = this.props;
         const directMessages = channels.filter(c => c.isDirectMessage).filter(c => c.name.includes(this.state.channelSearch));
         const groupChannels = channels.filter(c => !c.isDirectMessage).filter(c => c.name.includes(this.state.channelSearch));
@@ -22,7 +29,7 @@ class Sidebar extends Component {
                     <Menu vertical>
                         <Menu.Item>
                             {this.props.username}
-                            <Icon name='user circle'/>
+                            <Dropdown trigger={trigger} options={options} pointing='top left' icon={null} />
                         </Menu.Item>
                         <Menu.Item className='search-custom'>
                             <Form.Input
