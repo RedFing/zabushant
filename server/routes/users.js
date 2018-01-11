@@ -8,6 +8,7 @@ const userQueries = require('../queries/userQueries');
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
+// FIXME: this should be a protected route
 router.get('/:id', function (req,res,next) {
     const  {id}  = req.params;
     models.User.findById(id)

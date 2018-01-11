@@ -5,7 +5,6 @@ import Loader from '../../components/loader/Loader';
 import Success from '../../components/success/Success';
 import Error from '../../components/error/Error';
 
-
 export default class ResetPassword extends React.Component{
     constructor(props){
         super(props);
@@ -15,7 +14,7 @@ export default class ResetPassword extends React.Component{
             password: '',
             confirmPassword: '',
             success: null,
-
+            //FIXME: extract to constants
             subjectSuccess: 'You have successfully reset your password.',
             paragrafSuccess: 'You can sign in with new password.',
             linkSuccess: '/login',
@@ -70,7 +69,7 @@ export default class ResetPassword extends React.Component{
                         link={linkError}
                         buttonText={buttonTextError}
                     />
-        };
+        }
         if (this.state.loading){
             return <Loader/>
         }
@@ -90,7 +89,7 @@ export default class ResetPassword extends React.Component{
                         link={linkError}
                         buttonText={buttonTextError}
                     />
-        };
+        }
         return (
             <Container align='center'>
                 <h1>Reset password</h1>

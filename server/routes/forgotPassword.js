@@ -47,8 +47,6 @@ router.post('/reset-password', function (req,res,next) {
 });
 
 router.post('/', function (req,res,next) {
-    console.log('TESST');
-    console.log(req.body);
     var email = req.body.email;
     if (!email) {
         res.status(400).send({err: 'Bad request'});

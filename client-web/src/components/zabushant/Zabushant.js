@@ -14,7 +14,7 @@ const api = {
   getAllMessagesForChannel: (channelId) => axios.get(`/get-all-messages/${channelId}`),
 };
 
-// TODO: extract constant
+// TODO extract constant
 const SOCKET_ENDPOINT = "http://127.0.0.1:5000";
 
 class Zabushant extends Component {
@@ -71,39 +71,22 @@ class Zabushant extends Component {
       socket.on('received message', (newMessage) => this.onMessageReceived(newMessage));
     };
 
-    // TODO: add error handling
+    // TODO add error handling
     async componentDidMount(){
-        let currentUser = await api.getCurrentUser();
-        this.setState({ user: currentUser.data}, this.initSocket);
-        let allChannels = await api.getAllChannels(currentUser.data.id);
-        this.setState({ channels: allChannels.data});
-        let allMessages = await axios.all(allChannels.data.map(c => api.getAllMessagesForChannel(c.ChannelId)));
-        const allMessages2 = allMessages.map((ch,i) =>
-          ({channelId: allChannels.data[i].ChannelId, channelMessages: ch.data}));
-        this.setState({ currentChannel: allChannels.data[0].ChannelId, messages: allMessages2, loading: false});
-    }
-    /*
-    componentDidMount() {
-        axios.get('/get-current-user')
-            .then( res => {
-                this.setState({ user: res.data }, this.initSocket);
-                return axios.get(`/get-all-channels/${this.state.user.id}`)
-            })
-            .then(res => {
-              this.setState({channels: res.data});
-              const allChannelMessagesRequests = res.data.map(c => {
-                return axios.get(`/get-all-messages/${c.ChannelId}`)
-              });
-              return axios.all(allChannelMessagesRequests)
-            })
-            .then(allRes => {
-               const { channels } = this.state;
-               const all = allRes.map((res2,i) =>
-                 ({channelId: channels[i].ChannelId, channelMessages: res2.data}));
-               this.setState({ currentChannel: channels[0].ChannelId, messages: all, loading: false});
-            })
-            .catch(err => this.setState({ err: true}));
-    }*/
+        try {
+          let currentUser = await api.getCurrentUser();
+          this.setState({user: currentUser.data}, this.initSocket);
+          let allChannels = await api.getAllChannels(currentUser.data.id);
+          this.setState({channels: allChannels.data});
+          let allMessages = await axios.all(allChannels.data.map(c => api.getAllMessagesForChannel(c.ChannelId)));
+          const allMessages2 = allMessages.map((ch, i) =>
+            ({channelId: allChannels.data[i].ChannelId, channelMessages: ch.data}));
+          this.setState({currentChannel: allChannels.data[0].ChannelId, messages: allMessages2, loading: false});
+        } catch (err){
+          this.setState({error: true});
+          console.log(err);
+        }
+      }
 
     render() {
         const { messages, currentChannel, channels, user, loading } = this.state;
@@ -120,7 +103,7 @@ class Zabushant extends Component {
                     <Chat
                         sendMessage={this.sendMessage}
                         channelName={this.getChannelName()}
-                        // TODO: this prop calculation is not optimized
+                        // TODO this prop calculation is not optimized
                         messages={messages.find(msgObj => msgObj.channelId === currentChannel)} />
                 </Grid>
             </div>
