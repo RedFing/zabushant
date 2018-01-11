@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Grid, Segment, Item, Input, Comment, List, Image, Icon } from 'semantic-ui-react';
-import StayScrolled from 'react-stay-scrolled';
+import { Grid, Segment, Input, Comment } from 'semantic-ui-react';
 import './Chat.css';
-import moment from 'moment';
 import user from '../../images/users.svg';
 
 class Chat extends Component {
@@ -14,6 +12,7 @@ class Chat extends Component {
         this.scrollToBottom = this.scrollToBottom.bind(this);
     }
     componentDidUpdate(prevProps){
+        // FIXME: use componenentDidUpdate to check if scroll is needed
         this.scrollToBottom();
     }
     componentDidMount(){
@@ -27,7 +26,6 @@ class Chat extends Component {
         }
     };
     scrollToBottom(){
-        console.log(this.chatBody);
         this.chatBody.scrollTop = this.chatBody.scrollHeight - this.chatBody.clientHeight;
 
     }
@@ -48,19 +46,11 @@ class Chat extends Component {
                         <Comment.Group size='big'>
                             <Comment>
                                 {messages.channelMessages.map( msg =>
-                                <Comment.Content>
-                                    <Comment.Avatar as='a' src={user} />
-                                    <Comment.Author as='a'>{msg.username}</Comment.Author>
-                                    <Comment.Metadata>
-                                        <span>{msg.createdAt}</span>
-                                    </Comment.Metadata>
-                                    <Comment.Text>{msg.content}</Comment.Text>
-                                </Comment.Content>
-                                    )}
+                                    <Message message={msg} />
+                                )}
                             </Comment>
                         </Comment.Group>
                     </div>
-
                     <Input
                         fluid
                         placeholder={'message '+this.props.channelName+'...'}
@@ -70,10 +60,21 @@ class Chat extends Component {
                         onChange={e => this.setState({ messageInput: e.target.value})}
                         onKeyPress={this.onSendMessage}
                     />
-
                 </Grid.Column>
         );
     }
 }
+
+// TODO: extract to separate file
+const Message = ({ message }) => (
+  <Comment.Content>
+    <Comment.Avatar as='a' src={user} />
+    <Comment.Author as='a'>{message.username}</Comment.Author>
+    <Comment.Metadata>
+      <span>{message.createdAt}</span>
+    </Comment.Metadata>
+    <Comment.Text>{message.content}</Comment.Text>
+  </Comment.Content>
+);
 
 export default Chat;
