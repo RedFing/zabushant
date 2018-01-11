@@ -46,7 +46,7 @@ class Chat extends Component {
                         <Comment.Group size='big'>
                             <Comment>
                                 {messages.channelMessages.map( msg =>
-                                    <Message message={msg} />
+                                    <Message message={msg} key={msg.id} />
                                 )}
                             </Comment>
                         </Comment.Group>

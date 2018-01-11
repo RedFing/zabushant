@@ -51,8 +51,9 @@ class Zabushant extends Component {
     };
 
     onMessageReceived = (newMessage) => {
+        console.log(newMessage);
         const { messages } = this.state;
-        let findChannelId = messages.findIndex(c => c.channelId === newMessage.channelId);{}
+        let findChannelId = messages.findIndex(c => c.channelId === newMessage.channelId);
         if (findChannelId>-1){
             let channelToInsert = messages[findChannelId];
             channelToInsert.channelMessages = [...channelToInsert.channelMessages,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Form, Modal } from 'semantic-ui-react';
+import { Container, Form } from 'semantic-ui-react';
 import axios from 'axios';
 import Loader from '../../components/loader/Loader';
 import Success from '../../components/success/Success';

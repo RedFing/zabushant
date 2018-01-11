@@ -7,7 +7,7 @@ export default class Loader extends Component {
         return(
             <div>
                 <div style={{height:'50px'}}>
-                <img className='loadingLogo' src={LoaderImg} />
+                <img className='loadingLogo' src={LoaderImg} alt='' />
                     <h2 align="center">LOADING...</h2>
                 </div>
             </div>

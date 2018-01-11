@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Image } from 'semantic-ui-react';
 import coverImage from '../../images/cover.png';
 

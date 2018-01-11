@@ -1,5 +1,6 @@
 var db = require('../models');
 var sequelize = db.sequelize;
+
 async function getAllChannels(userId) {
     console.log("USER ID IS", userId);
     let res =  await sequelize.query(
@@ -13,7 +14,7 @@ async function getAllChannels(userId) {
 }
 async function getAllMessages(channelId) {
     let res =  await sequelize.query(
-        `   SELECT "Users".username, "Messages".content, "Messages"."createdAt" FROM "Messages"
+        `   SELECT "Users".username, "Messages".content, "Messages"."createdAt", "Messages".id FROM "Messages"
             INNER JOIN "Users" ON "Users".id="Messages"."userId"
             INNER JOIN "Channels" ON "Channels".id="Messages"."channelId"
             WHERE "channelId"=${channelId}`
@@ -24,7 +25,7 @@ async function getAllMessages(channelId) {
 async function insertMessage(userId, channelId, content) {
     let res = await sequelize.query(
         `    INSERT INTO "Messages" (content, "channelId", "userId", "createdAt", "updatedAt")
-             VALUES ('${content}', ${channelId}, ${userId}, current_date, current_date)`
+             VALUES ('${content}', ${channelId}, ${userId}, current_date, current_date) RETURNING *`
         , { type: sequelize.QueryTypes.SELECT});
     console.log(res);
     return res;
