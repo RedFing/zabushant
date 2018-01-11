@@ -5,7 +5,17 @@ import Chat from '../chat/Chat';
 import socketClient from 'socket.io-client';
 import axios from 'axios';
 import Loader from '../../components/loader/Loader';
-import { ToastContainer, toast} from 'react-toastify';
+
+
+// TODO extract
+const api = {
+  getCurrentUser          : ()          => axios.get('/get-current-user'),
+  getAllChannels          : (userId)    => axios.get(`/get-all-channels/${userId}`),
+  getAllMessagesForChannel: (channelId) => axios.get(`/get-all-messages/${channelId}`),
+};
+
+// TODO: extract constant
+const SOCKET_ENDPOINT = "http://127.0.0.1:5000";
 
 class Zabushant extends Component {
     constructor(props){
@@ -15,22 +25,21 @@ class Zabushant extends Component {
             messages: [],
             channels: [],
             user: {},
-            endpoint: "http://127.0.0.1:5000",
             loading: true,
             socket: {},
-
         }
     }
     onChannelChange = (channelId) => {
         this.setState({ currentChannel: channelId});
-
     };
+
     getChannelName = () => {
         const { currentChannel, channels} = this.state;
         const selectedChannel = channels.find(c => c.ChannelId === currentChannel);
         if (selectedChannel && selectedChannel.name) return selectedChannel.name;
         return '';
     };
+
     sendMessage = (content) => {
         const messageObj = {
             userId: this.state.user.id,
@@ -38,73 +47,81 @@ class Zabushant extends Component {
             channelId: this.state.currentChannel,
             username: this.state.user.username
         };
-        this.state.socket.emit('message', messageObj);
+        this.socket.emit('message', messageObj);
     };
+
+    onMessageReceived = (newMessage) => {
+        const { messages } = this.state;
+        let findChannelId = messages.findIndex(c => c.channelId === newMessage.channelId);{}
+        if (findChannelId>-1){
+            let channelToInsert = messages[findChannelId];
+            channelToInsert.channelMessages = [...channelToInsert.channelMessages,
+              { username: newMessage.username, content:newMessage.content, createdAt: newMessage.createdAt}];
+            let messagesCopy = this.state.messages;
+            messagesCopy[findChannelId] = channelToInsert;
+            this.setState({ messages: messagesCopy});
+        }
+    };
+
+    initSocket = () => {
+      const socket = socketClient(SOCKET_ENDPOINT);
+      this.socket = socket;
+      socket.on('connect', () => socket.emit('Register username', this.state.user));
+      socket.on('received message', (newMessage) => this.onMessageReceived(newMessage));
+    };
+
+    // TODO: add error handling
+    async componentDidMount(){
+        let currentUser = await api.getCurrentUser();
+        this.setState({ user: currentUser.data}, this.initSocket);
+        let allChannels = await api.getAllChannels(currentUser.data.id);
+        this.setState({ channels: allChannels.data});
+        let allMessages = await axios.all(allChannels.data.map(c => api.getAllMessagesForChannel(c.ChannelId)));
+        const allMessages2 = allMessages.map((ch,i) =>
+          ({channelId: allChannels.data[i].ChannelId, channelMessages: ch.data}));
+        this.setState({ currentChannel: allChannels.data[0].ChannelId, messages: allMessages2, loading: false});
+    }
+    /*
     componentDidMount() {
         axios.get('/get-current-user')
             .then( res => {
-               this.setState({ user: res.data }, () => {
-                   const { endpoint } = this.state;
-                   const socket = socketClient(endpoint);
-                    this.setState({ socket });
-                   socket.on('connect', () => {
-                       socket.emit('Register username', this.state.user);
-                   });
-                   socket.on('received message', (newMessage) =>{
-                       console.log('from socket', newMessage);
-                       let findChannel = this.state.messages.findIndex(c => c.channelId === newMessage.channelId);{}
-                       if (findChannel>-1){
-                           let channelToInsert = this.state.messages[findChannel];
-                           channelToInsert.channelMessages = [...channelToInsert.channelMessages,
-                               { username: newMessage.username, content:newMessage.content, createdAt: newMessage.createdAt}];
-                           let messagesCopy = this.state.messages;
-                           messagesCopy[findChannel] = channelToInsert;
-                           this.setState({ messages: messagesCopy});
-                       }
-                   } )
-               });
-               axios.get(`/get-all-channels/${this.state.user.id}`)
-                   .then(res => {
-                       this.setState({ channels: res.data});
-                       console.log('resDATA IS', res.data);
-                       const allChannelMessagesRequests = res.data.map(c => {
-                           return  axios.get(`/get-all-messages/${c.ChannelId}`)
-                       });
-
-                       axios.all(allChannelMessagesRequests)
-                           .then(allRes => {
-                               const all = allRes.map((res2,i) => {
-                                   return {
-                                       channelId: res.data[i].ChannelId,
-                                       channelMessages: res2.data
-                                   }
-                               });
-                               this.setState({ currentChannel: res.data[0].ChannelId, messages: all, loading: false});
-
-                           })
-                           .catch(err => this.setState({ err: true}));
-
-                   })
-            });
-    }
+                this.setState({ user: res.data }, this.initSocket);
+                return axios.get(`/get-all-channels/${this.state.user.id}`)
+            })
+            .then(res => {
+              this.setState({channels: res.data});
+              const allChannelMessagesRequests = res.data.map(c => {
+                return axios.get(`/get-all-messages/${c.ChannelId}`)
+              });
+              return axios.all(allChannelMessagesRequests)
+            })
+            .then(allRes => {
+               const { channels } = this.state;
+               const all = allRes.map((res2,i) =>
+                 ({channelId: channels[i].ChannelId, channelMessages: res2.data}));
+               this.setState({ currentChannel: channels[0].ChannelId, messages: all, loading: false});
+            })
+            .catch(err => this.setState({ err: true}));
+    }*/
 
     render() {
-        const { messages, currentChannel, loading } = this.state;
-        if (loading) return <Loader/>
+        const { messages, currentChannel, channels, user, loading } = this.state;
+        if (loading) return <Loader/>;
         return (
             <div>
-            <Grid>
-                <Sidebar
-                    username={this.state.user.username}
-                    onChannelChange={this.onChannelChange}
-                    channels={this.state.channels}
-                    channelName={this.getChannelName()}
-                />
-                <Chat
-                    sendMessage={this.sendMessage}
-                    channelName={this.getChannelName()}
-                    messages={messages.find(msgObj => msgObj.channelId === currentChannel)} />
-            </Grid>
+                <Grid>
+                    <Sidebar
+                        username={user.username}
+                        onChannelChange={this.onChannelChange}
+                        channels={channels}
+                        channelName={this.getChannelName()}
+                    />
+                    <Chat
+                        sendMessage={this.sendMessage}
+                        channelName={this.getChannelName()}
+                        // TODO: this prop calculation is not optimized
+                        messages={messages.find(msgObj => msgObj.channelId === currentChannel)} />
+                </Grid>
             </div>
         );
     }
