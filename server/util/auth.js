@@ -83,6 +83,7 @@ const checkAuth = () => (req,res,next) => {
     }
 
     const authToken = req.get('Authorization');
+    // let userObj = await validateAndRefreshToken(authToken)
     validateAndRefreshToken(authToken)
       .then(userObj => {
         if (!userObj || !userObj.token || !userObj.username || !userObj.id) throw new Error('invalid token');

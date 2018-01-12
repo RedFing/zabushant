@@ -43,7 +43,7 @@ io.on('connection', socket => {
           .then((msg) => {
             //const createdAt = mes.get('createdAt');
             // TODO return created at
-            io.sockets.emit('received message', msg[0] );
+            io.sockets.emit('received message', {...msg[0], username} );
           })
     });
 });

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Header, Segment, Button, Message, Form, Container, Image } from 'semantic-ui-react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import Logo from '../../images/logo.png';
+import Logo from '../../images/logoZabushant.png';
 import Cover from '../../pages/cover/Cover';
 
 class Register extends Component {
@@ -49,19 +49,17 @@ class Register extends Component {
             return <div>Error</div>
         }
         return (
-            <div>
+            <div className='background'>
                 <Container>
                     <Grid centered>
                         <Grid.Column mobile={16} tablet={8} computer={6}>
-                            <Image className='logo' src={Logo} size='medium'/>
-                            <Header as='h2' color='teal' textAlign='center'>
+                            <Image className='logo' src={Logo} size='big'/>
+                            <Header as='h4' textAlign='center'>
                                 Please complete your registration by filling the form
                             </Header>
                             <Form size='large'>
-                                <Segment raised>
                                     <Form.Input
                                         fluid
-                                        icon='user'
                                         iconPosition='left'
                                         placeholder='Username'
                                         onChange={this.handleInputChange}
@@ -70,7 +68,6 @@ class Register extends Component {
                                     />
                                     <Form.Input
                                         fluid
-                                        icon='mail'
                                         iconPosition='left'
                                         placeholder='E-mail address'
                                         onChange={this.handleInputChange}
@@ -79,7 +76,6 @@ class Register extends Component {
                                     />
                                     <Form.Input
                                         fluid
-                                        icon='lock'
                                         iconPosition='left'
                                         placeholder='Password'
                                         type='password'
@@ -89,7 +85,6 @@ class Register extends Component {
                                     />
                                     <Form.Input
                                         fluid
-                                        icon='lock'
                                         iconPosition='left'
                                         placeholder='Confirm password'
                                         type='password'
@@ -99,19 +94,15 @@ class Register extends Component {
                                     />
 
                                     <Button
-                                        color='teal'
+                                        color='white'
                                         fluid size='large'
                                         onClick={this.handleRegister}
                                     >
                                         Register</Button>
-                                </Segment>
                             </Form>
                             <Message>
-                                Already registered? <Link to="/login"> Sign in </Link>
+                                <h3>Already registered?</h3> <Link to="/login"> Sign in </Link>
                             </Message>
-                        </Grid.Column>
-                        <Grid.Column mobile={16} tablet={8} computer={10}>
-                            <Cover/>
                         </Grid.Column>
                     </Grid>
                 </Container>

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Container, Form} from 'semantic-ui-react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import Loader from '../../components/loader/Loader';
+import './CreateChannel.css';
 
 export default class CreateChannel extends React.Component{
     constructor(props) {
@@ -44,9 +45,9 @@ export default class CreateChannel extends React.Component{
 
         return(
             <Container style={{paddingTop: '50px', width:'60%'}} >
+                <p style={{width:'100px', float:'right'}}><Link to='/'>Go back!</Link></p>
                 <h2>Create channel!</h2>
                 <Form>
-
                     <Form.Input
                         label="Channel name:"
                         fluid placeholder="enter your channel name..."

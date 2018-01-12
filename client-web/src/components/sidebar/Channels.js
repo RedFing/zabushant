@@ -5,8 +5,8 @@ import './Sidebar.css';
 
 class Channels extends Component {
 
-    handleItemClick = (e, { name }) => {
-        this.props.onChannelChange(name);
+    handleItemClick = (id) => {
+        this.props.onChannelChange(id);
     };
 
     render() {
@@ -15,7 +15,7 @@ class Channels extends Component {
                         Channels <Link to='/create-channel'><Icon name='add circle'/></Link>
                         <Menu.Menu>
                             {this.props.channels.map((channel) =>
-                         <Menu.Item active={this.props.channelName === channel.name} onClick={this.handleItemClick} key={channel.name}>
+                         <Menu.Item active={this.props.channelName === channel.name} onClick={(e) => this.handleItemClick(channel.ChannelId)} key={channel.name}>
                             <Icon name='hashtag'  />
                             {channel.name}
                          </Menu.Item>

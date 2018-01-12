@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Segment, Input, Comment } from 'semantic-ui-react';
 import './Chat.css';
 import user from '../../images/users.svg';
-
+import moment from 'moment';
 class Chat extends Component {
     constructor(props){
         super(props);
@@ -11,18 +11,21 @@ class Chat extends Component {
         };
         this.scrollToBottom = this.scrollToBottom.bind(this);
     }
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps, prevState){
         // FIXME: use componenentDidUpdate to check if scroll is needed
         this.scrollToBottom();
+        console.log(this.input.inputRef.value);
     }
     componentDidMount(){
         this.scrollToBottom();
     }
     onSendMessage = (event) => {
         if(event.key === 'Enter') {
-            const {messageInput} = this.state;
-            this.props.sendMessage(messageInput);
-            this.setState({messageInput: ''});
+            const messageInput = this.input.inputRef.value;
+            if (messageInput.length){
+                this.props.sendMessage(messageInput);
+                this.input.inputRef.value='';
+            }
         }
     };
     scrollToBottom(){
@@ -55,9 +58,8 @@ class Chat extends Component {
                         fluid
                         placeholder={'message '+this.props.channelName+'...'}
                         className='input-msg'
-                        value={messageInput}
                         icon='arrow circle right'
-                        onChange={e => this.setState({ messageInput: e.target.value})}
+                        ref={input => this.input = input}
                         onKeyPress={this.onSendMessage}
                     />
                 </Grid.Column>
@@ -71,10 +73,14 @@ const Message = ({ message }) => (
     <Comment.Avatar as='a' src={user} />
     <Comment.Author as='a'>{message.username}</Comment.Author>
     <Comment.Metadata>
-      <span>{message.createdAt}</span>
+      <span>{formatTimestamp(message.createdAt)}</span>
     </Comment.Metadata>
     <Comment.Text>{message.content}</Comment.Text>
   </Comment.Content>
 );
+
+// TODO: add error handling
+const formatTimestamp = timestamp => moment(timestamp).add(10,'hours').add(10, 'minutes').fromNow();
+
 
 export default Chat;

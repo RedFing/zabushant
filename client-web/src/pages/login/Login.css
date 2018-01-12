@@ -1,10 +1,65 @@
+.background {
+    min-height: 100%;
+    width:100%;
+    left: 0;
+    position: fixed;
+    background: linear-gradient(top, #0c9999 0%, #0b8383 50%, #097070 100%);
+}
 p {
     text-align: justify;
 }
 .logo {
-    padding-top: 20px;
+    padding-top: 50px;
 }
-h2 {
+h4 {
     margin:30px;
     font-weight: bold;
+    color:white !important;
+}
+div.ui.fluid.left.icon.input input  {
+    padding: 20px !important;
+    color: white !important;
+    background: transparent !important;
+    outline: none;
+    border:0 !important;
+    border-bottom: 2px solid white !important;
+}
+i,user.icon {
+    color: white !important;
+    float: right;
+}
+div.field input::placeholder {
+    color: white !important;
+    opacity: .8;
+    font-size: 16px;
+}
+button.ui,button button {
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+}
+div.ui.message {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+div.ui.message h3 {
+    width: auto;
+    float: left;
+    padding:5px;
+    color: white;
+    font-weight: normal;
+}
+div.ui.message a {
+    color: white !important;
+    float: right;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 0;
+}
+div.ui.message a:hover {
+    background-color: white;
+    color: #0c9999 !important;
 }

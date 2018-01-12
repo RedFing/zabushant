@@ -3,7 +3,7 @@ import {Grid, Form, Header, Image, Button, Message, Segment, Container} from 'se
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import Cover from '../cover/Cover';
-import Logo from '../../images/logo.png';
+import Logo from '../../images/logoZabushant.png';
 import './Login.css';
 
 class Login extends Component {
@@ -43,20 +43,17 @@ class Login extends Component {
             return <Redirect to='/' />;
             }
         return (
-            <div>
+            <div className='background'>
                 <Container>
                     <Grid centered>
                         <Grid.Column mobile={16} tablet={8} computer={6}>
-                            <Image className='logo' src={Logo} size='medium'/>
-                            <Header as='h2' color='teal' textAlign='center'>
+                            <Image className='logo' src={Logo} size='big' centered/>
+                            <Header as='h4' textAlign='center'>
                                 Log-in to your account
                             </Header>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc scelerisque at nulla eu porttitor. Fusce rutrum volutpat magna, sit amet volutpat odio. Morbi venenatis dolor sem, et pulvinar nulla sagittis quis. Pellentesque et condimentum diam, in fringilla ex. Praesent quis vestibulum urna. Duis eleifend orci at erat tristique, ut laoreet nulla imperdiet. Integer quis libero ac nunc lobortis ultrices in eu quam. </p>
-                            <Form size='large'>
-                                <Segment raised>
-                                    <Form.Input
+                            <Form className='input-custom'>
+                                <Form.Input
                                         fluid
-                                        icon='user'
                                         iconPosition='left'
                                         placeholder='Username'
                                         onChange={this.handleInputChange}
@@ -65,7 +62,6 @@ class Login extends Component {
                                     />
                                     <Form.Input
                                         fluid
-                                        icon='lock'
                                         iconPosition='left'
                                         placeholder='Password'
                                         type='password'
@@ -73,21 +69,21 @@ class Login extends Component {
                                         value={this.state.password}
                                         name="password"
                                     />
-
                                     <Button
-                                        color='teal'
+                                        color='white'
                                         fluid size='large'
                                         onClick={this.handleLogin}
                                     >Login</Button>
-                                </Segment>
+
                             </Form>
                             <Message>
-                                Not registered? <Link to="/register"> Sign up </Link>
+                                <h3>Not registered?</h3> <Link to="/register"> Sign up </Link>
+                                <div style={{clear: 'both'}}>
+                                    <h3>Forgot password?</h3> <Link to="/forgot-password"> Forgot password </Link>
+                                </div>
                             </Message>
                         </Grid.Column>
-                        <Grid.Column mobile={16} tablet={8} computer={10}>
-                            <Cover/>
-                        </Grid.Column>
+
                     </Grid>
                 </Container>
             </div>

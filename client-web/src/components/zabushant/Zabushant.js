@@ -57,7 +57,7 @@ class Zabushant extends Component {
         if (findChannelId>-1){
             let channelToInsert = messages[findChannelId];
             channelToInsert.channelMessages = [...channelToInsert.channelMessages,
-              { username: newMessage.username, content:newMessage.content, createdAt: newMessage.createdAt}];
+              { ...newMessage}];
             let messagesCopy = this.state.messages;
             messagesCopy[findChannelId] = channelToInsert;
             this.setState({ messages: messagesCopy});
