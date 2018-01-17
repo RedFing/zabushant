@@ -1,45 +1,27 @@
 import React, { Component } from 'react';
 import {Grid, Form, Header, Image, Button, Message, Segment, Container} from 'semantic-ui-react';
-import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import Cover from '../cover/Cover';
 import Logo from '../../images/logoZabushant.png';
 import './Login.css';
-
+import { connect } from 'react-redux';
+import { usernameChanged, passwordChanged, loginUser } from '../../actions/LoginActions';
 class Login extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-            success: null,
-        }
-        this.handleLogin = this.handleLogin.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
-    }
 
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]: value
-        });
-    }
-
-    handleLogin() {
-        const { username, password } = this.state;
-        axios.post('/login', { username, password })
-            .then(res => {
-                this.setState({ success: true });
-                localStorage.setItem('token', res.data.token);
-               console.log(res.data.token);
-            });
-    }
+    handleUsernameChanged = e => {
+       this.props.usernameChanged(e.target.value);
+    };
+    handlePasswordChanged = e => {
+        this.props.passwordChanged(e.target.value);
+    };
+    handleLogin = () => {
+        const { username, password} = this.props;
+        this.props.loginUser({ username, password});
+    };
 
     render() {
-        if ( this.state.success) {
+
+        if ( this.props.successLogin) {
             return <Redirect to='/' />;
             }
         return (
@@ -56,8 +38,8 @@ class Login extends Component {
                                         fluid
                                         iconPosition='left'
                                         placeholder='Username'
-                                        onChange={this.handleInputChange}
-                                        value={this.state.username}
+                                        onChange={this.handleUsernameChanged}
+                                        value={this.props.username}
                                         name="username"
                                     />
                                     <Form.Input
@@ -65,16 +47,17 @@ class Login extends Component {
                                         iconPosition='left'
                                         placeholder='Password'
                                         type='password'
-                                        onChange={this.handleInputChange}
-                                        value={this.state.password}
+                                        onChange={this.handlePasswordChanged}
+                                        value={this.props.password}
                                         name="password"
                                     />
                                     <Button
                                         color='white'
                                         fluid size='large'
                                         onClick={this.handleLogin}
+                                        loading={this.props.loading}
                                     >Login</Button>
-
+                                    {this.props.error && <div>{this.props.error}</div>}
                             </Form>
                             <Message>
                                 <h3>Not registered?</h3> <Link to="/register"> Sign up </Link>
@@ -91,4 +74,11 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapStateToProps = ({ login }) => {
+    const { username, password, error, successLogin, loading} = login;
+    return { username, password, error, successLogin, loading};
+};
+
+export default connect(mapStateToProps, {
+    usernameChanged, passwordChanged, loginUser
+})(Login);

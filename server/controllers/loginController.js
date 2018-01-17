@@ -31,10 +31,10 @@ const post = () => (req,res,next) => {
       } else {
          console.log('token is');
          res.header("Authorization", userObj.token.toString());
-         res.send({token: userObj.token.toString()});
+         res.send({username: userObj.username, id: userObj.id, token: userObj.token.toString()});
       }
   }).catch(err => {
-      res.send({ err: 'Bad login'})
+      res.status(400).send({ err: 'Bad login'})
   });
 };
 
