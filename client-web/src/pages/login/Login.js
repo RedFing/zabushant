@@ -6,6 +6,7 @@ import Logo from '../../images/logoZabushant.png';
 import './Login.css';
 import { connect } from 'react-redux';
 import { usernameChanged, passwordChanged, loginUser } from '../../actions/LoginActions';
+
 class Login extends Component {
 
     handleUsernameChanged = e => {
@@ -15,8 +16,8 @@ class Login extends Component {
         this.props.passwordChanged(e.target.value);
     };
     handleLogin = () => {
-        const { username, password} = this.props;
-        this.props.loginUser({ username, password});
+        const { username, password } = this.props;
+        this.props.loginUser({ username, password });
     };
 
     render() {

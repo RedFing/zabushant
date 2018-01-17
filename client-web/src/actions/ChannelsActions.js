@@ -25,7 +25,7 @@ export const channelsLoading = () => dispatch => {
     axios.get('/get-all-channels')
         .then(res => {
             dispatch(channelsLoadedSuccess(res.data));
-            dispatch(setCurrentChannel(res.data[0]))
+            dispatch(setCurrentChannel(res.data[0]));
         })
         .catch( () => channelsLoadedFail('Error!'));
 }

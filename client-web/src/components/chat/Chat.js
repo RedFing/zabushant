@@ -41,8 +41,8 @@ class Chat extends Component {
     };
     scrollToBottom(){
         this.chatBody.scrollTop = this.chatBody.scrollHeight - this.chatBody.clientHeight;
-
     }
+
     render() {
         const { messageInput } = this.state;
         const { messages, currentChannel } = this.props;

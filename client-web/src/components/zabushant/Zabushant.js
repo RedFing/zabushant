@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { initSocketToStore }from '../../reducers/SocketReducer';
 import {addMessage} from '../../actions/MessageActions';
 import { channelsLoading } from '../../actions/ChannelsActions';
+import Loader from "../loader/Loader";
 
 const SOCKET_ENDPOINT = "http://127.0.0.1:5000";
 
@@ -40,6 +41,7 @@ class Zabushant extends Component {
         console.log('CURRENT CHANNEL', this.props.currentChannel);
     }
     render() {
+        if (this.props.channels.loading) return <Loader/>;
         return (
             <div>
                 <Grid>
@@ -51,7 +53,7 @@ class Zabushant extends Component {
     }
 }
 
-const mapStateToProps = ({ user, currentChannel }) => {
-    return { user, currentChannel };
+const mapStateToProps = ({ user, currentChannel, channels }) => {
+    return { user, currentChannel, channels };
 };
 export default connect(mapStateToProps, {channelsLoading, addMessage, initSocketToStore})(Zabushant);
