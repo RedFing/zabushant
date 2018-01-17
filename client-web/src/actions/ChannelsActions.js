@@ -19,7 +19,7 @@ export const channelsLoadedFail = (error) => {
     });
 };
 
-export const channelLoading = () => dispatch => {
+export const channelsLoading = () => dispatch => {
     dispatch({ type: CHANNELS_LOADING });
     axios.get('/get-all-channels')
         .then(res => {

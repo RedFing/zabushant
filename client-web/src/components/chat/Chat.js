@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Grid, Segment, Input, Comment } from 'semantic-ui-react';
 import './Chat.css';
 import user from '../../images/users.svg';
+import { connect } from 'react-redux';
 import moment from 'moment';
+import { addMessage } from '../../actions/MessageActions';
 class Chat extends Component {
     constructor(props){
         super(props);
@@ -19,11 +21,22 @@ class Chat extends Component {
     componentDidMount(){
         this.scrollToBottom();
     }
+    // TODO: use auth
+    sendMessage = (content) => {
+        const messageObj = {
+            userId: this.state.user.id,
+            content: content,
+            channelId: this.state.currentChannel,
+            username: this.state.user.username
+        };
+        this.props.socket.emit('message', messageObj);
+    };
+
     onSendMessage = (event) => {
         if(event.key === 'Enter') {
             const messageInput = this.input.inputRef.value;
             if (messageInput.length){
-                this.props.sendMessage(messageInput);
+                this.sendMessage(messageInput);
                 this.input.inputRef.value='';
             }
         }
@@ -34,13 +47,13 @@ class Chat extends Component {
     }
     render() {
         const { messageInput } = this.state;
-        const { messages } = this.props;
+        const { messages, currentChannel } = this.props;
 
-        if (!( messages && messages.channelMessages )) return <div>loading</div>
+        if (currentChannel.loading) return <div>loading</div>
         return (
           <Grid.Column style={{ width:'calc(100% - 250px)', position:'fixed', right:'0', height:'100vh'}}>
                     <Segment className='chat-header'>
-                        #{this.props.channelName}
+                        #{this.props.currentChannel.name}
                     </Segment>
                     <div
                         className='chat-body'
@@ -48,7 +61,7 @@ class Chat extends Component {
                     >
                         <Comment.Group size='big'>
                             <Comment>
-                                {messages.channelMessages.map( msg =>
+                                {messages.map( msg =>
                                     <Message message={msg} key={msg.id} />
                                 )}
                             </Comment>
@@ -56,7 +69,7 @@ class Chat extends Component {
                     </div>
                     <Input
                         fluid
-                        placeholder={'message '+this.props.channelName+'...'}
+                        placeholder={'message '+this.props.currentChannel.name+'...'}
                         className='input-msg'
                         icon='arrow circle right'
                         ref={input => this.input = input}
@@ -66,7 +79,6 @@ class Chat extends Component {
         );
     }
 }
-
 // TODO: extract to separate file
 const Message = ({ message }) => (
   <Comment.Content>
@@ -82,5 +94,9 @@ const Message = ({ message }) => (
 // TODO: add error handling
 const formatTimestamp = timestamp => moment(timestamp).add(10,'hours').add(10, 'minutes').fromNow();
 
+const mapStateToProps = ({ messages, currentChannel, socket}) => {
+    return { messages, currentChannel, socket};
+};
 
-export default Chat;
+
+export default connect(mapStateToProps,{addMessage})(Chat);

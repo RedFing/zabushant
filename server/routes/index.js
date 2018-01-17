@@ -24,8 +24,8 @@ router.get('/get-current-user', function (req, res, next) {
     res.send({id: req.user.id, username: req.user.username });
 });
 var userQueries = require('../queries/userQueries');
-router.get('/get-all-channels/:userId', function (req,res,next) {
-    let { userId } = req.params;
+router.get('/get-all-channels/', function (req,res,next) {
+    let  userId  = req.user.id;
 
     userQueries.getAllChannels(userId)
         .then(channels => {
