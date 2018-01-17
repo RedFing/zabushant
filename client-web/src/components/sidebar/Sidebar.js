@@ -3,7 +3,8 @@ import {  Menu, Grid, Form, Icon, Dropdown } from 'semantic-ui-react';
 import './Sidebar.css';
 import Channels from './Channels';
 import DirectMessages from './DirectMessages';
-import { setCurrentChannel} from '../../actions/CurrentChannelActions';
+import { connect } from 'react-redux';
+import { getAllMessagesAsync} from "../../actions/MessageActions";
 
 class Sidebar extends Component {
     render() {
@@ -15,9 +16,9 @@ class Sidebar extends Component {
             { key: 'settings', text: 'Settings', icon: 'settings' },
             { key: 'sign-out', text: 'Sign Out', icon: 'sign out' },
         ];
-        const { channels, user, currrentChannel } = this.props;
-        const directMessages = channels.filter(c => c.isDirectMessage);
-        const groupChannels  = channels.filter(c => !c.isDirectMessage);
+        const { channels, user, currentChannel } = this.props;
+        const directMessages = channels.channels.filter(c => c.isDirectMessage);
+        const groupChannels  = channels.channels.filter(c => !c.isDirectMessage);
         return (
                 <Grid.Column style={{width:'250px'}}>
                     <Menu vertical>
@@ -29,14 +30,14 @@ class Sidebar extends Component {
                             it render differently based on additional props passed
                         */}
                         <Channels
-                          channelName={currrentChannel.name}
-                          onChannelChange={(id) =>this.props.setCurrentChannel(id)}
+                          channelName={currentChannel.currentChannel.name}
+                          onChannelChange={(channel) =>this.props.getAllMessagesAsync(channel)}
                           channels={groupChannels}
                         />
                         <DirectMessages
-                          channelName={currrentChannel.name}
+                          channelName={currentChannel.currentChannel.name}
                           username={this.props.user.username}
-                          onChannelChange={(id) =>this.props.setCurrentChannel(id)}
+                          onChannelChange={(channel) =>this.props.getAllMessagesAsync(channel)}
                           channels={directMessages}
                         />
                     </Menu>
@@ -50,4 +51,4 @@ const mapStateToProps = ({ channels, currentChannel, user}) => {
 
 
 export default connect(mapStateToProps,
-    { setCurrentChannel})(Sidebar);
+    { getAllMessagesAsync })(Sidebar);

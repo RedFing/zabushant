@@ -8,7 +8,7 @@ const UTF8 = 'utf8';
 const models = require('../models');
 
 const PROTECTED_ROUTES = [
-  '/message', '/get-current-user', '/get-all-users'
+  '/message', '/get-current-user', '/get-all-users', '/get-all-channels'
 ];
 
 

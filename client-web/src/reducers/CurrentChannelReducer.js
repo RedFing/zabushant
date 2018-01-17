@@ -8,15 +8,18 @@ const INIITIAL_STATE = {
     loading: false,
     success: false,
     error: null,
-    currentChannel: {},
+    currentChannel: {
+        name: '',
+        id: ''
+    },
 }
 
-export default (state, action) => {
+export default (state = INIITIAL_STATE, action) => {
     switch (action.type) {
         case CURRENT_CHANNEL_CHANGED:
             return {...state, currentChannel: action.currentChannel };
         case GET_ALL_MESSAGES_STARTED:
-            return {...state, loading: true, success: true};
+            return {...state, loading: false, success: true};
         case GET_ALL_MESSAGES_FAILED:
             return {...state, error: 'ERROR!'};
         default:

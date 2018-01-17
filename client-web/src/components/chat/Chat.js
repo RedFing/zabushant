@@ -16,19 +16,17 @@ class Chat extends Component {
     componentDidUpdate(prevProps, prevState){
         // FIXME: use componenentDidUpdate to check if scroll is needed
         this.scrollToBottom();
-        console.log(this.input.inputRef.value);
     }
-    componentDidMount(){
-        this.scrollToBottom();
-    }
+
     // TODO: use auth
     sendMessage = (content) => {
         const messageObj = {
-            userId: this.state.user.id,
+            userId: this.props.user.id,
             content: content,
-            channelId: this.state.currentChannel,
-            username: this.state.user.username
+            channelId: this.props.currentChannel.currentChannel.ChannelId,
+            username: this.props.user.username
         };
+
         this.props.socket.emit('message', messageObj);
     };
 
@@ -48,12 +46,13 @@ class Chat extends Component {
     render() {
         const { messageInput } = this.state;
         const { messages, currentChannel } = this.props;
+        console.log(messages);
 
         if (currentChannel.loading) return <div>loading</div>
         return (
           <Grid.Column style={{ width:'calc(100% - 250px)', position:'fixed', right:'0', height:'100vh'}}>
                     <Segment className='chat-header'>
-                        #{this.props.currentChannel.name}
+                        #{this.props.currentChannel.currentChannel.name}
                     </Segment>
                     <div
                         className='chat-body'
@@ -69,7 +68,7 @@ class Chat extends Component {
                     </div>
                     <Input
                         fluid
-                        placeholder={'message '+this.props.currentChannel.name+'...'}
+                        placeholder={'message '+this.props.currentChannel.currentChannel.name+'...'}
                         className='input-msg'
                         icon='arrow circle right'
                         ref={input => this.input = input}
@@ -94,8 +93,8 @@ const Message = ({ message }) => (
 // TODO: add error handling
 const formatTimestamp = timestamp => moment(timestamp).add(10,'hours').add(10, 'minutes').fromNow();
 
-const mapStateToProps = ({ messages, currentChannel, socket}) => {
-    return { messages, currentChannel, socket};
+const mapStateToProps = ({ user, messages, currentChannel, socket}) => {
+    return { user, messages, currentChannel, socket};
 };
 
 

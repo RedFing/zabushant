@@ -9,8 +9,8 @@ export default combineReducers({
     user: UserReducer,
     login: LoginReducer,
     channels: ChannelsReducer,
-    message: MessageReducer,
-    currectChannel: CurrentChannelReducer,
+    messages: MessageReducer,
+    currentChannel: CurrentChannelReducer,
     socket: SocketReducer
 
 

@@ -10,7 +10,7 @@ export const SIGN_OUT = "SIGN_OUT";
 export const getAllMessagesAsync = (currentChannel) => dispatch => {
     dispatch (getAllMessagesStarted());
     dispatch(setCurrentChannel(currentChannel));
-    axios.get('get-all-messages/'+currentChannel.id)
+    axios.get('get-all-messages/'+currentChannel.ChannelId)
         .then(res => {
             dispatch(getAllMessagesSuccess(res.data));
         })

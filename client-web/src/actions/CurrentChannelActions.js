@@ -6,3 +6,4 @@ export const setCurrentChannel = (currentChannel) => {
         currentChannel: currentChannel
     }
 };
+

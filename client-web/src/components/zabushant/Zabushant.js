@@ -3,7 +3,7 @@ import { Grid } from 'semantic-ui-react';
 import Sidebar from '../sidebar/Sidebar';
 import Chat from '../chat/Chat';
 import socketClient from 'socket.io-client';
-import connect from 'react-redux';
+import { connect } from 'react-redux';
 import { initSocketToStore }from '../../reducers/SocketReducer';
 import {addMessage} from '../../actions/MessageActions';
 import { channelsLoading } from '../../actions/ChannelsActions';
@@ -23,19 +23,22 @@ class Zabushant extends Component {
       this.socket = socket;
       this.props.initSocketToStore(socket);
       // FIXME: don't send user, use auth
-      socket.on('connect', () => socket.emit('Register username', this.props.user));
-      socket.on('received message', (newMessage) => {
-          if (currentChannel.channelId == newMessage.channelId){
-              this.props.addMessage();
+      this.socket.on('connect', () => socket.emit('Register username', this.props.user));
+      this.socket.on('received message', (newMessage) => {
+          console.log(currentChannel);
+          if (this.props.currentChannel.currentChannel.ChannelId == newMessage.channelId){
+              this.props.addMessage(newMessage);
           }
-          });
+      });
     };
 
     // TODO add error handling
     componentDidMount(){
           this.props.channelsLoading();
       }
-
+    componentDidUpdate(){
+        console.log('CURRENT CHANNEL', this.props.currentChannel);
+    }
     render() {
         return (
             <div>

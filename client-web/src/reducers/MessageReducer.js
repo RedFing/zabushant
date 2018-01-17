@@ -4,9 +4,7 @@ import {
     SIGN_OUT
 } from "../actions/MessageActions";
 
-const INITIAL_STATE = {
-    messages: [],
-};
+const INITIAL_STATE = [];
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -15,7 +13,7 @@ export default (state = INITIAL_STATE, action) => {
         case ADD_MESSAGE:
             return [...state, action.message];
         case SIGN_OUT:
-            return state;
+            return [];
         default:
             return state;
     }
