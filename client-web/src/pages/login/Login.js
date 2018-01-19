@@ -21,7 +21,6 @@ class Login extends Component {
     };
 
     render() {
-
         if ( this.props.successLogin) {
             return <Redirect to='/' />;
             }

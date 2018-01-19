@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Grid, Segment, Input, Comment } from 'semantic-ui-react';
+import { Grid, Segment, Input, Comment, Icon, Label } from 'semantic-ui-react';
 import './Chat.css';
 import user from '../../images/users.svg';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { addMessage } from '../../actions/MessageActions';
+
 class Chat extends Component {
     constructor(props){
         super(props);
@@ -51,9 +52,27 @@ class Chat extends Component {
         if (currentChannel.loading) return <div>loading</div>
         return (
           <Grid.Column style={{ width:'calc(100% - 250px)', position:'fixed', right:'0', height:'100vh'}}>
-                    <Segment className='chat-header'>
-                        #{this.props.currentChannel.currentChannel.name}
-                    </Segment>
+                    <div className='chat-header'>
+                        <Segment.Group horizontal>
+                            <Segment style={{fontSize:'25px'}}>
+                                #{this.props.currentChannel.currentChannel.name}
+                                </Segment>
+                            <Segment className='chat-search'>
+                                <Icon color='black' name='add user' />
+                                <Icon color='black' name='settings' />
+                                <Input icon='search' placeholder='Search...' />
+                                <Icon color='black' name='info' />
+                                <Icon color='black' name='call' disabled />
+                            </Segment>
+                        </Segment.Group>
+                        <Segment.Group horizontal className='icons-details'>
+                            <div className='border-detail'>
+                                <Icon color='black' name='empty star' />
+                                <Icon color='black' name='unhide' />
+                                <Icon color='black' name='user outline' /> 32
+                            </div>
+                        </Segment.Group>
+                    </div>
                     <div
                         className='chat-body'
                         ref={(div) => this.chatBody = div}
@@ -68,6 +87,8 @@ class Chat extends Component {
                     </div>
                     <Input
                         fluid
+                        label={{ icon: 'plus' }}
+                        labelPosition='left'
                         placeholder={'message '+this.props.currentChannel.currentChannel.name+'...'}
                         className='input-msg'
                         icon='arrow circle right'

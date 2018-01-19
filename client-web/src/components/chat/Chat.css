@@ -1,12 +1,77 @@
-div.ui.segment.chat-header {
+div.chat-header {
     margin:0 !important;
+    padding: 10px;
+    padding-top: 0;
     font-size: 24px !important;
     font-weight: bold;
-    height: 75px;
+    height: 100px;
     margin-bottom: 10px !important;
+    box-shadow: 2px 2px 5px #e8e8e8;
+    border: 1px solid #e8e8e8;
+}
+div.ui.horizontal.segments {
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+div.ui.horizontal.segments.icons-details {
+    font-size: 18px !important;
+}
+.border-detail {
+    width:auto;
+    padding:5px;
+}
+.border-detail i {
+    font-size: 20px !important;
+    display: block !important;
+    float: left !important;
+}
+.border-detail i:hover {
+    cursor: pointer;
+    color: #0c9999 !important;
+}
+div.ui.segment.chat-search {
+    width:100px !important;
+    padding: 0 !important;
+}
+div.ui.segment.chat-search i {
+    font-size: 20px !important;
+    float: right !important;
+    cursor: pointer;
+    margin-right: 10pX;
+    margin-top: 15px;
+}
+div.ui.segment.chat-search > div.ui.icon.input {
+    float: right;
+    padding: 5px !important;
+    border-radius: 10px;
+    margin-right: 10px;
+    outline: none;
+}
+div.ui.icon.input > i.search.icon {
+    color: black !important;
+}
+div.ui.segment.chat-search i:hover {
+    color: #0c9999 !important;
+}
+div.ui.segment {
+    padding: 5px !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 5px !important;
+}
+div.ui.segment i {
+    float: left !important;
+}
+div.border-detail i {
+    margin-left: 15px;
+}
+div.border-detail i:first-child {
+    margin: 0;
 }
 .chat-body {
-    height: calc(100% - 150px);
+    height: calc(100% - 175px);
     overflow-y: scroll;
     background-color: white;
     padding:20px;
@@ -26,16 +91,28 @@ div.ui.fluid.input.input-msg {
     background-color: white !important;
     height: 75px;
 }
-div.ui.fluid.input.input-msg input {
+div.ui.fluid.icon.left.labeled.labeled.input.input-msg input {
     outline: none !important;
     border: 2px solid black !important;
     background-color: none !important;
     padding: 15px !important;
     font-size: 20px !important;
+    color: black !important;
 }
-div.ui.fluid.input.input-msg input::placeholder {
-    color: black;
+div.ui.fluid.icon.left.labeled.labeled.input.input-msg input::placeholder {
+    color: black !important;
     font-weight: bold;
+}
+div.ui.label {
+    border: 2px solid black;
+    border-right: none;
+    background-color: transparent !important;
+}
+i.plus.icon {
+    color:black !important;
+    font-size: 20px !important;
+    margin:auto !important;
+    margin-top: 5px !important;
 }
 a.avatar {
     margin-right: 10px !important;
@@ -43,4 +120,5 @@ a.avatar {
 i.arrow.circle.right.icon {
     margin-right: 15px !important;
     font-size: 25px !important;
+    color: black !important;
 }
