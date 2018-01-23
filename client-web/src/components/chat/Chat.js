@@ -16,7 +16,7 @@ class Chat extends Component {
     }
     componentDidUpdate(prevProps, prevState){
         // FIXME: use componenentDidUpdate to check if scroll is needed
-        this.scrollToBottom();
+        if (this.props.messages.length) this.scrollToBottom();
     }
 
     // TODO: use auth
@@ -50,6 +50,7 @@ class Chat extends Component {
         console.log(messages);
 
         if (currentChannel.loading) return <div>loading</div>
+        const users = this.props.currentChannel.currentChannel.users;
         return (
           <Grid.Column style={{ width:'calc(100% - 250px)', position:'fixed', right:'0', height:'100vh'}}>
                     <div className='chat-header'>
@@ -69,7 +70,7 @@ class Chat extends Component {
                             <div className='border-detail'>
                                 <Icon color='black' name='empty star' />
                                 <Icon color='black' name='unhide' />
-                                <Icon color='black' name='user outline' /> 32
+                                <Icon color='black' name='user outline' /> {users ? users.length: ''}
                             </div>
                         </Segment.Group>
                     </div>

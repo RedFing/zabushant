@@ -2,15 +2,17 @@ import React from 'react';
 import { Container, Form} from 'semantic-ui-react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect} from 'react-redux';
+
 import Loader from '../../components/loader/Loader';
 import './CreateChannel.css';
 
-export class CreateChannel extends React.Component{
+class CreateChannel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            selectedUsers : [],
-            users: this.props.isDM ? '' : [],
+            selectedUsers : this.props.isDM ? '' : [],
+            users: [],
             channelName: '',
             loading: true,
             success: null,
@@ -35,7 +37,9 @@ export class CreateChannel extends React.Component{
         axios.get('/get-all-users')
             .then(res => {
                 const users = res.data.map(el => {return {...el, key: el.id, value: el.id, text:el.username}});
-                this.setState({ loading: false, users});
+                const { user } = this.props;
+                const users2 = users.filter(el => el.id != user.id);
+                this.setState({ loading: false, users: users2});
             })
     }
 
@@ -48,11 +52,12 @@ export class CreateChannel extends React.Component{
                 <p style={{width:'100px', float:'right'}}><Link to='/'>Go back!</Link></p>
                 <h2>{this.props.isDM ?'Create direct message' :'Create channel!'}</h2>
                 <Form>
-                    <Form.Input
+                    {!this.props.isDM && <Form.Input
                         label="Channel name:"
                         fluid placeholder="enter your channel name..."
                         value={this.state.channelName}
-                        onChange={(e) => this.setState({ channelName: e.target.value })}/>
+                        onChange={(e) => this.setState({channelName: e.target.value})}/>
+                    }
                     <Form.Dropdown
                         label={this.props.isDM ? 'User:' : 'Users:'}
                         value={this.state.selectedUsers}
@@ -73,4 +78,7 @@ export class CreateChannel extends React.Component{
         );
     }
 }
+const mapStateToProps = ({ user}) => ({user});
+CreateChannel = connect(mapStateToProps, () => {})(CreateChannel);
+export default CreateChannel;
 export const CreateChannelDM = (props) => <CreateChannel isDM={true}/>

@@ -30,7 +30,7 @@ router.post('/', function(req,res,next){
   const encryptedPassword = auth.hashPassword(password);
   models.User.create({ username, email, password: encryptedPassword })
       .then((user) => {
-          userQueries.createDirectMessageChannelsForNewUser(user.id, user.username).then();
+          userQueries.createDirectMessageChannelForMyself(user.id, user.username).then();
         res.send({ status: 'OK'});
       })
       .catch(err => res.status(400).send({ err: 'Bad register.'}));

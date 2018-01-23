@@ -5,7 +5,7 @@ import Register from '../pages/register/Register';
 import Zabushant from '../components/zabushant/Zabushant';
 import ForgotPassword from '../pages/forgotPassword/ForgotPassword';
 import ResetPassword from '../pages/forgotPassword/ResetPassword';
-import {CreateChannel, CreateChannelDM} from "../pages/createChannel/CreateChannel";
+import CreateChannel,{ CreateChannelDM }  from "../pages/createChannel/CreateChannel";
 class MainRouter extends Component {
     render() {
         return (

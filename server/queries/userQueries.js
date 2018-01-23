@@ -2,6 +2,7 @@ var db = require('../models');
 var sequelize = db.sequelize;
 
 async function getAllChannels(userId) {
+    console.log('getAllChannels');
     console.log("USER ID IS", userId);
     let res =  await sequelize.query(
         `   SELECT "ChannelId", name, "isDirectMessage" FROM "UserChannel"
@@ -15,7 +16,7 @@ async function getAllChannels(userId) {
      */
     let usersFromChannelsPromises = res.map(ch => getAllUserIdsForChannel(ch.ChannelId));
     let res3 = await Promise.all(usersFromChannelsPromises);
-    const finalRes = res.map((ch, i) => ({...ch, users: res3[i]}));
+    const finalRes = res.map((ch, i) => ({...ch, users: res3[i].map(el =>el.UserId)}));
 
     return finalRes;
 }
@@ -32,7 +33,7 @@ async function getAllMessages(channelId) {
 async function insertMessage(userId, channelId, content) {
     let res = await sequelize.query(
         `    INSERT INTO "Messages" (content, "channelId", "userId", "createdAt", "updatedAt")
-             VALUES ('?', ?, ?, current_date, current_date) RETURNING *`
+             VALUES (?, ?, ?, current_date, current_date) RETURNING *`
         , { replacements: [content, channelId, userId],type: sequelize.QueryTypes.SELECT});
     console.log(res);
     return res;
@@ -40,8 +41,8 @@ async function insertMessage(userId, channelId, content) {
 async function createGroupChannel(channelName, userIds, isDirectMessage) {
     let query1 = await sequelize.query(
         `       INSERT INTO "Channels" (name, "isDirectMessage", "createdAt", "updatedAt")
-                VALUES ('?', ?, current_date, current_date) RETURNING id;`
-        , { replacements: [channelName, isDirectMessage], type: sequelize.QueryTypes.SELECT});
+                VALUES (?, ?, current_date, current_date) RETURNING id;`
+        , { replacements: [channelName, !!isDirectMessage], type: sequelize.QueryTypes.SELECT});
     const channelId = query1[0].id;
     let query2Promises = userIds.map(u =>
         sequelize.query(
@@ -52,13 +53,13 @@ async function createGroupChannel(channelName, userIds, isDirectMessage) {
     return res;
 }
 async function createDirectMessageChannelForMyself(userId, userName) {
-    const channelName = userName;
+    const channelName = userName+ ' - '+ userName;
     return await createGroupChannel(channelName, [userId], true);
 }
 
 async function getAllUserIdsForChannel(channelId) {
     let res = await sequelize.query(
-        `   SELECT UserId FROM "UserChannel" WHERE "ChannelId"=?
+        `   SELECT "UserId" FROM "UserChannel" WHERE "ChannelId"=?
         `
         , { replacements: [channelId],type: sequelize.QueryTypes.SELECT});
     console.log(res);

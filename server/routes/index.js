@@ -56,17 +56,19 @@ router.get('/get-all-users', function (req, res, next) {
 });
 
 router.post('/create-channel', async function(req,res,next){
+    console.log(req.user.id);
     try{
         const { users, channelName } = req.body;
         if (users instanceof Array){
-            userQueries.createGroupChannel(channelName,users)
+
+            userQueries.createGroupChannel(channelName, [...users, req.user.id])
                 .then( _ => {
                     res.send({ status: 'OK'});
                 }).catch(err => res.status(400).send({ err: 'Bad request' }));
         } else {
             const otherUser = await models.User.findOne({ attributes: ['id','username']});
             const channelName = otherUser.username + ' - ' + req.user.username;
-            await userQueries.createGroupChannel(channelName,[req.user.id, otherUser.id],true);
+            await userQueries.createGroupChannel(channelName,[req.user.id, otherUser.id], true);
             res.send({status: 'OK' });
         }
     } catch (e){

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {setCurrentChannel} from "./CurrentChannelActions";
+import {getAllMessagesAsync} from "./MessageActions";
 
 export const CHANNELS_LOADED_SUCCESS = "CHANNELS_LOADED_SUCCESS";
 export const CHANNELS_LOADED_FAIL = "CHANNELS_LOADED_FAIL";
@@ -26,6 +27,7 @@ export const channelsLoading = () => dispatch => {
         .then(res => {
             dispatch(channelsLoadedSuccess(res.data));
             dispatch(setCurrentChannel(res.data[0]));
+            dispatch(getAllMessagesAsync(res.data[0]));
         })
         .catch( () => channelsLoadedFail('Error!'));
 }

@@ -36,8 +36,9 @@ class Zabushant extends Component {
 
     // TODO add error handling
     componentDidMount(){
-          this.props.channelsLoading();
-          this.props.getUser();
+        this.props.getUser();
+        this.props.channelsLoading();
+
       }
     componentDidUpdate(){
         console.log('CURRENT CHANNEL', this.props.currentChannel);
