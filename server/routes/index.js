@@ -55,12 +55,23 @@ router.get('/get-all-users', function (req, res, next) {
         }).catch(err => res.status(400).send({err: 'Bad request!'}));
 });
 
-router.post('/create-channel', function(req,res,next){
-    const { users, channelName } = req.body;
+router.post('/create-channel', async function(req,res,next){
+    try{
+        const { users, channelName } = req.body;
+        if (users instanceof Array){
+            userQueries.createGroupChannel(channelName,users)
+                .then( _ => {
+                    res.send({ status: 'OK'});
+                }).catch(err => res.status(400).send({ err: 'Bad request' }));
+        } else {
+            const otherUser = await models.User.findOne({ attributes: ['id','username']});
+            const channelName = otherUser.username + ' - ' + req.user.username;
+            await userQueries.createGroupChannel(channelName,[req.user.id, otherUser.id],true);
+            res.send({status: 'OK' });
+        }
+    } catch (e){
+        res.status(400).send({ err: 'Bad request'});
+    }
 
-    userQueries.createGroupChannel(channelName,users)
-        .then( _ => {
-            res.send({ status: 'OK'});
-        }).catch(err => res.status(400).send({ err: 'Bad request' }));
 });
 module.exports = router;

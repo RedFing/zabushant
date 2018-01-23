@@ -16,7 +16,7 @@ const post = () => (req,res,next) => {
     models.User.create({ username, email, password })
         .then((user) => {
             console.log('GRESSSKA: ', user.id);
-            userQueries.createDirectMessageChannelsForNewUser(user.id, user.username).then();
+            userQueries.createDirectMessageChannelForMyself(user.id, user.username).then();
             res.send({ status: 'OK'});
         })
         .catch(err =>{

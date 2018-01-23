@@ -16,6 +16,7 @@ const post = () => (req,res,next) => {
       where: { username, password },
       attributes: [ 'id', 'username']
   }).then(user => {
+      console.log(user);
       if (!user) throw new Error('bad login');
       return {
         token: auth.refreshToken(username),
