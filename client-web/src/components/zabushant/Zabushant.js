@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { initSocketToStore }from '../../reducers/SocketReducer';
 import {addMessage} from '../../actions/MessageActions';
 import { channelsLoading } from '../../actions/ChannelsActions';
+import { getUser } from '../../actions/LoginActions';
 import Loader from "../loader/Loader";
 
 const SOCKET_ENDPOINT = "http://127.0.0.1:5000";
@@ -36,6 +37,7 @@ class Zabushant extends Component {
     // TODO add error handling
     componentDidMount(){
           this.props.channelsLoading();
+          this.props.getUser();
       }
     componentDidUpdate(){
         console.log('CURRENT CHANNEL', this.props.currentChannel);
@@ -56,4 +58,4 @@ class Zabushant extends Component {
 const mapStateToProps = ({ user, currentChannel, channels }) => {
     return { user, currentChannel, channels };
 };
-export default connect(mapStateToProps, {channelsLoading, addMessage, initSocketToStore})(Zabushant);
+export default connect(mapStateToProps, {channelsLoading, addMessage, initSocketToStore, getUser})(Zabushant);

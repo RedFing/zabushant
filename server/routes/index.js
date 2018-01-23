@@ -21,7 +21,7 @@ router.get('/message', function (req,res,next) {
 router.get('/get-current-user', function (req, res, next) {
     console.log('bezveze');
     console.log(req.user.username);
-    res.send({id: req.user.id, username: req.user.username });
+    res.send({id: req.user.id, username: req.user.username, token: req.user.token });
 });
 var userQueries = require('../queries/userQueries');
 router.get('/get-all-channels', function (req,res,next) {

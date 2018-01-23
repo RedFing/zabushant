@@ -5,7 +5,7 @@ import axios from 'axios';
 import Loader from '../../components/loader/Loader';
 import './CreateChannel.css';
 
-export default class CreateChannel extends React.Component{
+export class CreateChannel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -46,7 +46,7 @@ export default class CreateChannel extends React.Component{
         return(
             <Container style={{paddingTop: '50px', width:'60%'}} >
                 <p style={{width:'100px', float:'right'}}><Link to='/'>Go back!</Link></p>
-                <h2>Create channel!</h2>
+                <h2>{this.props.isDM ?'Create direct message' :'Create channel!'}</h2>
                 <Form>
                     <Form.Input
                         label="Channel name:"
@@ -54,14 +54,15 @@ export default class CreateChannel extends React.Component{
                         value={this.state.channelName}
                         onChange={(e) => this.setState({ channelName: e.target.value })}/>
                     <Form.Dropdown
-                        label='Users:'
+                        label={this.props.isDM ? 'User:' : 'Users:'}
                         value={this.state.selectedUsers}
                         name='selectedUsers'
                         placeholder='add users...'
                         onChange={this.handleUsersSelected}
                         fluid selection
                         options={this.state.users}
-                        search multiple
+                        search
+                        multiple={!this.props.isDM}
                     />
                     <Form.Button
                         color='teal'
@@ -72,3 +73,4 @@ export default class CreateChannel extends React.Component{
         );
     }
 }
+export const CreateChannelDM = (props) => <CreateChannel isDM={true}/>

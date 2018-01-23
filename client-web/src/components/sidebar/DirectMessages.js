@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import './Sidebar.css';
+
+
 class DirectMessages extends Component {
     constructor(props){
         super(props);
@@ -20,7 +23,7 @@ class DirectMessages extends Component {
     render() {
         return (
                 <Menu.Item>
-                    Direct messages <Icon name='add circle'/>
+                    Direct messages <Link to='/create-channel-dm'><Icon name='add circle'/></Link>
                     <Menu.Menu>
                 {this.props.channels.map(directMsg =>
                     <Menu.Item active={this.props.channelName === directMsg.name} onClick={(e) => this.handleItemClick(directMsg)} key={directMsg.name}>
