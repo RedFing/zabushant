@@ -7,6 +7,12 @@ import { connect } from 'react-redux';
 import { getAllMessagesAsync} from "../../actions/MessageActions";
 
 class Sidebar extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            channelSearch: '',
+        }
+    }
     render() {
         const trigger = <Icon name='list layout'/>;
         // TODO: options never change in render, extract them
@@ -17,8 +23,8 @@ class Sidebar extends Component {
             { key: 'sign-out', text: 'Sign Out', icon: 'sign out' },
         ];
         const { channels, user, currentChannel } = this.props;
-        const directMessages = channels.channels.filter(c => c.isDirectMessage);
-        const groupChannels  = channels.channels.filter(c => !c.isDirectMessage);
+        const directMessages = channels.channels.filter(c => c.isDirectMessage).filter(c => c.name.includes(this.state.channelSearch));
+        const groupChannels  = channels.channels.filter(c => !c.isDirectMessage).filter(c => c.name.includes(this.state.channelSearch));
         return (
                 <Grid.Column style={{width:'250px'}}>
                     <Menu vertical>
@@ -29,6 +35,16 @@ class Sidebar extends Component {
                         {/* TODO: these two components are nearly identical, use one instead but make
                             it render differently based on additional props passed
                         */}
+                        <Menu.Item className='search-custom'>
+                                <Form.Input
+                                    icon='search'
+                                    placeholder="search channels...."
+                                    fluid
+                                    size="mini"
+                                    value={this.state.channelSearch}
+                                    onChange={(e) => this.setState({ channelSearch: e.target.value })}
+                                />
+                        </Menu.Item>
                         <Channels
                           channelName={currentChannel.currentChannel.name}
                           onChannelChange={(channel) =>this.props.getAllMessagesAsync(channel)}

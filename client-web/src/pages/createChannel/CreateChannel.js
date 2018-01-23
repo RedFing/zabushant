@@ -10,7 +10,7 @@ export class CreateChannel extends React.Component{
         super(props);
         this.state = {
             selectedUsers : [],
-            users: [],
+            users: this.props.isDM ? '' : [],
             channelName: '',
             loading: true,
             success: null,

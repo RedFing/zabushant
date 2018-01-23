@@ -49,7 +49,7 @@ div.ui.segment.chat-search > div.ui.icon.input {
     margin-right: 10px;
     outline: none;
 }
-div.ui.icon.input > i.search.icon {
+div.ui.icon.input.chat-header-search > i.search.icon {
     color: black !important;
 }
 div.ui.segment.chat-search i:hover {
@@ -107,6 +107,7 @@ div.ui.label {
     border: 2px solid black;
     border-right: none;
     background-color: transparent !important;
+    cursor: pointer;
 }
 i.plus.icon {
     color:black !important;

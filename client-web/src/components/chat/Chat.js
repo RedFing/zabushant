@@ -60,7 +60,7 @@ class Chat extends Component {
                             <Segment className='chat-search'>
                                 <Icon color='black' name='add user' />
                                 <Icon color='black' name='settings' />
-                                <Input icon='search' placeholder='Search...' />
+                                <Input className='chat-header-search' icon='search' placeholder='Search...' />
                                 <Icon color='black' name='info' />
                                 <Icon color='black' name='call' disabled />
                             </Segment>
