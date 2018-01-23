@@ -39,16 +39,16 @@ div.ui.mini.fluid.input input {
     color: white !important;
 }
 div.ui.mini.fluid.input input::placeholder {
-    color: white;
+    color: white !important;
     opacity: .7;
 }
 div.item.search-custom {
     padding: 5px !important;
 }
-i.search.icon { color: white !important;}
 div.ui.top.left.pointing.dropdown {
     float: right !important;
 }
 div.menu.transition.visible {
     position: absolute !important;
 }
+i.search.icon { color: white !important;}
