@@ -52,3 +52,7 @@ div.menu.transition.visible {
     position: absolute !important;
 }
 i.search.icon { color: white !important;}
+.channels-content {
+    max-height: 200px;
+    overflow-y: scroll;
+}

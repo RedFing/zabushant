@@ -14,12 +14,14 @@ class Channels extends Component {
                     <Menu.Item>
                         Channels <Link to='/create-channel'><Icon name='add circle'/></Link>
                         <Menu.Menu>
-                            {this.props.channels.map((channel) =>
-                         <Menu.Item active={this.props.channelName === channel.name} onClick={(e) => this.handleItemClick(channel)} key={channel.name}>
-                            <Icon name='hashtag'  />
-                            {channel.name}
-                         </Menu.Item>
-                )}
+                            <div className='channels-content'>
+                                    {this.props.channels.map((channel) =>
+                                 <Menu.Item active={this.props.channelName === channel.name} onClick={(e) => this.handleItemClick(channel)} key={channel.name}>
+                                    <Icon name='hashtag'  />
+                                    {channel.name}
+                                 </Menu.Item>
+                                  )}
+                            </div>
                         </Menu.Menu>
                     </Menu.Item>
         );

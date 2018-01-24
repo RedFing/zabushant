@@ -31,6 +31,7 @@ router.post('/reset-password', function (req,res,next) {
         where: { tokenValue: token, type: 'forgot-password', active: true }
     }).then(tokenObj => {
         const email = tokenObj.get('email');
+        console.log('EMAIL IS', email);
         return models.User.findOne({
             where: { email }
         })
@@ -42,6 +43,7 @@ router.post('/reset-password', function (req,res,next) {
         models.Token.update({ active: false},{ where: { tokenValue: token}});
         res.send({ status: 'OK'});
     }).catch(err => {
+        console.log(err);
         res.status(400).send({ err: 'Bad request'});
     });
 });

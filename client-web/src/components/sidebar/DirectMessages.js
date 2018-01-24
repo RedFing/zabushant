@@ -25,12 +25,14 @@ class DirectMessages extends Component {
                 <Menu.Item>
                     Direct messages <Link to='/create-channel-dm'><Icon name='add circle'/></Link>
                     <Menu.Menu>
-                {this.props.channels.map(directMsg =>
-                    <Menu.Item active={this.props.channelName === directMsg.name} onClick={(e) => this.handleItemClick(directMsg)} key={directMsg.name}>
-                        <Icon name='circle'  />
-                        {this.getDMName(directMsg.name)}
-                    </Menu.Item>
-                )}
+                    <div className='channels-content'>
+                        {this.props.channels.map(directMsg =>
+                            <Menu.Item active={this.props.channelName === directMsg.name} onClick={(e) => this.handleItemClick(directMsg)} key={directMsg.name}>
+                                <Icon name='circle'  />
+                                {this.getDMName(directMsg.name)}
+                            </Menu.Item>
+                        )}
+                    </div>
                     </Menu.Menu>
                 </Menu.Item>
         );

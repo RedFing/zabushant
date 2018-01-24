@@ -17,6 +17,7 @@ class CreateChannel extends React.Component{
             loading: true,
             success: null,
             error: false,
+            errorMessage: ''
 
         };
         this.handleUsersSelected = this.handleUsersSelected.bind(this);
@@ -30,7 +31,10 @@ class CreateChannel extends React.Component{
             .then(res => {
                 this.setState({ success: true});
             }).catch(err => {
-                this.setState({ success: false});
+                console.log(err.response.data.err);
+                let errorMessage='';
+                if (err.response.data.err) errorMessage=err.response.data.err;
+                this.setState({ success: false, errorMessage});
         });
     }
     componentDidMount(){
@@ -74,6 +78,7 @@ class CreateChannel extends React.Component{
                         onClick={this.submitNewChannel}
                     >Create channel</Form.Button>
                 </Form>
+                { this.state.errorMessage!=='' &&  <div>{this.state.errorMessage}</div>}
             </Container>
         );
     }

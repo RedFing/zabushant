@@ -25,9 +25,9 @@ class Zabushant extends Component {
       this.socket = socket;
       this.props.initSocketToStore(socket);
       // FIXME: don't send user, use auth
-      this.socket.on('connect', () => socket.emit('Register username', this.props.user));
+      this.socket.on('connect', () => socket.emit('Register username', this.props.user.token));
       this.socket.on('received message', (newMessage) => {
-          console.log(currentChannel);
+          console.log(newMessage);
           if (this.props.currentChannel.currentChannel.ChannelId == newMessage.channelId){
               this.props.addMessage(newMessage);
           }

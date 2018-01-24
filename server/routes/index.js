@@ -60,14 +60,29 @@ router.post('/create-channel', async function(req,res,next){
     try{
         const { users, channelName } = req.body;
         if (users instanceof Array){
-
+            const checkIfExists = await models.Channel.findOne({ where: {name: channelName}});
+            if (checkIfExists){
+                res.status(400).send({ err: 'Channel name already exists! Change channel name.'});
+                return;
+            }
             userQueries.createGroupChannel(channelName, [...users, req.user.id])
                 .then( _ => {
                     res.send({ status: 'OK'});
                 }).catch(err => res.status(400).send({ err: 'Bad request' }));
         } else {
-            const otherUser = await models.User.findOne({ attributes: ['id','username']});
+            const otherUser = await models.User.findOne({ where: {id: users}, attributes: ['id','username']});
             const channelName = otherUser.username + ' - ' + req.user.username;
+            const channelName2 = req.user.username + ' - ' + otherUser.username;
+            const checkIfExists = await models.Channel.findOne({
+                where: {
+                    [models.Sequelize.Op.or]: [{name: channelName}, { name: channelName2}]
+                }});
+
+            if (checkIfExists){
+                res.status(400).send({ err: 'DM channel already exists!'});
+                return;
+            }
+
             await userQueries.createGroupChannel(channelName,[req.user.id, otherUser.id], true);
             res.send({status: 'OK' });
         }

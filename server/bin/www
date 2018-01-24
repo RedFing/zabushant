@@ -24,6 +24,8 @@ var server = http.createServer(app);
 var io = socketIo(server);
 var userQueries = require('../queries/userQueries');
 var clients = [];
+var auth = require('../util/auth');
+
 io.on('connection', socket => {
     console.log('Connected');
 
@@ -31,20 +33,27 @@ io.on('connection', socket => {
       console.log('Client disconnected!');
     });
 
-    socket.on('Register username', (data) => {
-      console.log(data);
+    socket.on('Register username', async (data) => {
+      const user = await auth.validateAndRefreshToken(data);
+      if (!user) return;
       let socketWithUser = socket;
-      socketWithUser.user = data;
+      socketWithUser.user = user;
       clients.push(socketWithUser);
     });
-    socket.on('message', (messageObj) => {
+    socket.on('message', async (messageObj) => {
+      console.log('CLIENTS');
+      console.log(clients.map(el => el.id));
       const {userId, content, channelId, username } = messageObj;
-      userQueries.insertMessage(userId, channelId, content)
-          .then((msg) => {
-            //const createdAt = mes.get('createdAt');
-            // TODO return created at
-            io.sockets.emit('received message', {...msg[0], username} );
-          })
+      const msg = await userQueries.insertMessage(userId, channelId, content);
+      const userIdsObjs = await userQueries.getAllUserIdsForChannel(channelId);
+      const userIds = userIdsObjs.map(el => el.UserId);
+      console.log('USER IDS: ', userIds);
+      for (let i =0; i<clients.length;i++){
+          if (userIds.indexOf(clients[i].user.id)>-1){
+            console.log('SALJEM', clients[i].user.id);
+            io.to(clients[i].id).emit('received message', {...msg[0], username} );
+          }
+      }
     });
 });
 

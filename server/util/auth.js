@@ -102,5 +102,6 @@ const checkAuth = () => (req,res,next) => {
 module.exports  = {
   checkAuth: checkAuth,
   hashPassword: hashPassword,
-  refreshToken: refreshToken
+  refreshToken: refreshToken,
+  validateAndRefreshToken: validateAndRefreshToken,
 };
