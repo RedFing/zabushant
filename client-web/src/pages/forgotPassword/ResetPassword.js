@@ -1,9 +1,12 @@
 import React from 'react';
-import { Container, Form } from 'semantic-ui-react';
+import { Container, Form, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import Loader from '../../components/loader/Loader';
 import Success from '../../components/success/Success';
 import Error from '../../components/error/Error';
+import Header from "../../components/header/Header";
+import forgotPass from '../../images/forgotPass.svg';
+import './ForgotPassword.css';
 
 export default class ResetPassword extends React.Component{
     constructor(props){
@@ -91,34 +94,40 @@ export default class ResetPassword extends React.Component{
                     />
         }
         return (
-            <Container align='center'>
+            <div>
+            <Header/>
+            <Container align='center' className="container-position">
+                <Image src={forgotPass} centered size='small' />
                 <h1>Reset password</h1>
                 <p>We’ll send you an email to confirm
                     your address and find existing workspaces
                     you’ve joined or can join.</p>
                 <Form align='center'>
-                    <Form.Group>
-                        <Form.Input
-                            placeholder="your password..."
+                        <input
+                            style={{marginBottom:'20px'}}
+                            fluid
+                            placeholder="new password..."
                             value={this.state.password}
                             onChange={(e)=> this.setState({ password: e.target.value})}
                             type="password"
                         />
-                        <Form.Input
-                            placeholder="confirm password..."
+                        <input
+                            fluid
+                            placeholder="confirm new password..."
                             value={this.state.confirmPassword}
                             onChange={(e)=> this.setState({ confirmPassword: e.target.value})}
                             type="password"
                         />
 
-                        <Form.Button
+                        <button
+                            fluid
                             onClick={this.handlePasswordRecoverySubmit}
                         >
                             Send
-                        </Form.Button>
-                    </Form.Group>
+                        </button>
                 </Form>
             </Container>
+            </div>
         )
     }
 }

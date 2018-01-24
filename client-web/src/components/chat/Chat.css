@@ -123,3 +123,16 @@ i.arrow.circle.right.icon {
     font-size: 25px !important;
     color: black !important;
 }
+
+.chat-div {
+    width:calc(100% - 250px) !important;
+    position:fixed !important;
+    right:0 !important;
+    height:100vh !important;
+}
+@media only screen and (max-width: 1080px) {
+    .chat-div {
+        width: 900px !important;
+        left: 250px !important;
+    }
+}

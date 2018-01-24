@@ -52,7 +52,7 @@ class Chat extends Component {
         if (currentChannel.loading) return <div>loading</div>
         const users = this.props.currentChannel.currentChannel.users;
         return (
-          <Grid.Column style={{ width:'calc(100% - 250px)', position:'fixed', right:'0', height:'100vh'}}>
+          <Grid.Column className='chat-div'>
                     <div className='chat-header'>
                         <Segment.Group horizontal>
                             <Segment style={{fontSize:'25px'}}>

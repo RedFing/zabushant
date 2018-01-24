@@ -1,10 +1,10 @@
 .header-logo {
-    background-color: #f4f6f9;
+    background-color: #0c9999;
     box-shadow: 2px 2px 5px #888888;
     padding:20px;
 }
 .header-logo img {
-    width:150px;
+    width:250px;
     display: block;
     margin: auto;
 }

@@ -76,19 +76,19 @@ export default class ForgotPassword extends Component{
                     Please enter your email address.
                 </p>
                 <Form>
-                    <Form.Group>
-                        <Form.Input style={{width:'300px'}}
+                        <input
                             placeholder="your email..."
                             value={this.state.email}
                             onChange={(e)=> this.setState({ email: e.target.value})}
                             type="email"
+                            fluid
                         />
-                        <Form.Button style={{width:'100px'}}
+                        <button
+                            fluid
                             onClick={this.handleEmailSubmit}
                         >
                         Send
-                        </Form.Button>
-                    </Form.Group>
+                        </button>
                 </Form>
             </Container>
             </div>
