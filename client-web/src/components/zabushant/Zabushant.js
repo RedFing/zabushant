@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
+import { Redirect } from 'react-router-dom';
+
 import Sidebar from '../sidebar/Sidebar';
 import Chat from '../chat/Chat';
 import socketClient from 'socket.io-client';
@@ -9,6 +11,7 @@ import {addMessage} from '../../actions/MessageActions';
 import { channelsLoading } from '../../actions/ChannelsActions';
 import { getUser } from '../../actions/LoginActions';
 import Loader from "../loader/Loader";
+
 
 const SOCKET_ENDPOINT = "http://127.0.0.1:5000";
 
@@ -25,7 +28,8 @@ class Zabushant extends Component {
       this.socket = socket;
       this.props.initSocketToStore(socket);
       // FIXME: don't send user, use auth
-      this.socket.on('connect', () => socket.emit('Register username', this.props.user.token));
+      console.log('TOKEN IS: ', this.props.user.token);
+        this.socket.on('connect', () => socket.emit('Register username', localStorage.getItem('token')));
       this.socket.on('received message', (newMessage) => {
           console.log(newMessage);
           if (this.props.currentChannel.currentChannel.ChannelId == newMessage.channelId){
@@ -44,6 +48,9 @@ class Zabushant extends Component {
         console.log('CURRENT CHANNEL', this.props.currentChannel);
     }
     render() {
+        if (!localStorage.getItem('token')){
+            return <Redirect to="/login" />
+        }
         if (this.props.channels.loading) return <Loader/>;
         return (
             <div>
